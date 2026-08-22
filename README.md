@@ -6,6 +6,8 @@
 
 Este projeto propõe um **simulador de trabalho para Engenharia de Dados**. O objetivo não é ensinar tecnologias do zero, mas oferecer um ambiente no qual pessoas que já estudaram conceitos e ferramentas possam **aplicar o conhecimento em situações próximas do mundo real**.
 
+A experiência pode ser entendida como um **estágio simulado de Engenharia de Dados**: o participante entra em uma empresa fictícia, conhece seus sistemas e dados, recebe demandas e evolui conforme entrega soluções cada vez mais complexas.
+
 O participante assume o papel de Engenheiro de Dados de uma empresa fictícia, recebe demandas em formato de tickets, investiga dados e documentação, implementa soluções e submete suas entregas a validações automatizadas.
 
 ## Problema
@@ -70,7 +72,6 @@ Após validar o MVP, o simulador poderá incorporar:
 
 ## Documentação
 
-- [Visão do produto](docs/VISION.md)
 - [Discovery](docs/DISCOVERY.md)
 - [Princípios do projeto](docs/PRINCIPLES.md)
 - [Arquitetura inicial](docs/ARCHITECTURE.md)
