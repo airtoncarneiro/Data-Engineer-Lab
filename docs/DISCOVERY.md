@@ -61,7 +61,26 @@ Cada ticket poderá conter:
 - critérios de aceite;
 - restrições conhecidas;
 - artefatos relacionados;
-- dependências, quando existirem.
+- dependências, quando existirem;
+- Learning Resources relacionados, quando aplicável.
+
+### 6.1 Learning Resources e material de apoio
+
+Os tickets podem indicar materiais de apoio para permitir que o participante adquira ou revise conceitos necessários para resolver a demanda sem transformar o simulador em um curso.
+
+Diretrizes:
+
+- a consulta aos materiais é opcional;
+- priorizar documentação oficial e fontes técnicas confiáveis;
+- os recursos devem ensinar conceitos, não entregar a solução específica do ticket;
+- preferir materiais autocontidos e reutilizáveis por diferentes tickets;
+- evitar duplicar explicações extensas dentro dos tickets;
+- um mesmo Learning Resource pode ser referenciado por vários tickets;
+- quando possível, organizar Learning Resources por domínio ou conceito.
+
+Exemplo: se uma demanda exige conhecimento de PostgreSQL Window Functions, o ticket pode referenciar um material sobre Window Functions, mas não deve indicar qual função, particionamento ou ordenação resolve especificamente aquela demanda.
+
+A intenção é reproduzir um comportamento profissional: diante de uma demanda que exige conhecimento ainda não dominado, o participante identifica a lacuna, consulta documentação ou material técnico e aplica o conhecimento ao problema.
 
 ## 7. Jornada do participante
 
@@ -212,7 +231,8 @@ Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" pr
 - estrutura para soluções;
 - Pull Request no fork;
 - GitHub Actions;
-- testes automáticos.
+- testes automáticos;
+- Learning Resources relacionados aos tickets, quando aplicável.
 
 ### Fora do MVP
 
@@ -235,6 +255,7 @@ As seguintes decisões serão tratadas durante o detalhamento:
 - estratégia para atualização do fork sem sobrescrever soluções;
 - critérios de progressão entre tickets;
 - possibilidade de dependências entre tickets;
+- estrutura e localização dos Learning Resources no repositório;
 - política para uso de LLMs pelos participantes;
 - modelo futuro de pontuação;
 - identidade e domínio da empresa fictícia;
