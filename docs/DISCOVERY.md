@@ -131,7 +131,7 @@ Quando aplicável, a validação poderá combinar evidências determinísticas c
 
 ### Evolução
 
-Após concluir tickets iniciais, o participante recebe problemas progressivamente mais complexos e envolvendo novas tecnologias.
+Após concluir tickets iniciais, o participante recebe problemas progressivamente mais complexos e envolvendo novas tecnologias. A evolução pós-MVP é tratada como hipótese no [ROADMAP](ROADMAP.md), sem ampliar o escopo definido para o MVP.
 
 ## 8. Modelo Git
 
@@ -174,9 +174,7 @@ Possível sequência:
 9. cloud e infraestrutura;
 10. incidentes, otimização e arquitetura.
 
-Essa sequência é indicativa e deverá ser refinada após o MVP.
-
-No MVP, o nível e os conceitos-alvo podem ser informados explicitamente ao gerador de tickets. A inferência automática contínua do nível do participante e a seleção autônoma da próxima competência são evoluções posteriores.
+Essa sequência é indicativa. A evolução pós-MVP, incluindo hipóteses de adaptação e novas trilhas, está registrada no [ROADMAP](ROADMAP.md).
 
 ## 10. Validação automática
 
@@ -208,18 +206,7 @@ O histórico de evidências de competência pode começar de forma simples no MV
 
 ## 11. Gamificação
 
-Gamificação é uma possibilidade, não requisito do MVP.
-
-Evoluções possíveis:
-
-- pontos;
-- níveis;
-- badges;
-- sequência de tickets concluídos;
-- especializações;
-- ranking.
-
-A gamificação não deve substituir a qualidade técnica nem incentivar soluções artificiais apenas para maximizar pontos.
+Gamificação é uma possibilidade, não requisito do MVP. Eventuais evoluções de gamificação estão registradas no [ROADMAP](ROADMAP.md) e não fazem parte do escopo atual.
 
 ## 12. Uso de IA e agentes
 
@@ -231,26 +218,7 @@ No MVP, o uso prioritário é:
 - apoiar a criação de critérios de aceite e entregáveis;
 - apoiar feedback técnico sobre entregas, preferencialmente baseado em evidências produzidas por validações determinísticas.
 
-Possibilidades evolutivas:
-
-- gerar massas de dados;
-- criar casos de teste;
-- atuar como revisor técnico;
-- avaliar aspectos não determinísticos;
-- identificar ambiguidades em tickets;
-- simular solicitantes e stakeholders;
-- produzir variações de cenários;
-- validar desafios antes da publicação;
-- inferir competências a partir do histórico;
-- selecionar autonomamente a próxima competência ou desafio.
-
-Uma arquitetura multiagente poderá separar responsabilidades, por exemplo:
-
-**Ticket Designer → Data Generator → Test Designer → Reviewer → Publisher**
-
-Essa arquitetura completa não é requisito do MVP.
-
-Conteúdo gerado por IA deverá passar por validação antes de se tornar parte oficial do simulador.
+Possibilidades adicionais de IA, adaptação e automação são hipóteses pós-MVP mantidas no [ROADMAP](ROADMAP.md). Conteúdo gerado por IA deverá passar por validação antes de se tornar parte oficial do simulador.
 
 ## 13. MVP
 

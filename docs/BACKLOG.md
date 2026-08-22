@@ -98,10 +98,11 @@ Os tickets não devem necessariamente corresponder 1:1 a esses tópicos. A deman
 ## Épico 10 — Validação do produto
 
 - [ ] Selecionar pequeno grupo de usuários iniciais.
-- [ ] Observar onboarding sem auxílio.
-- [ ] Medir tickets iniciados/concluídos.
-- [ ] Registrar pontos de confusão.
-- [ ] Avaliar qualidade do feedback do CI.
+- [ ] Medir taxa de onboarding concluído sem ajuda.
+- [ ] Medir tempo até a primeira entrega.
+- [ ] Medir taxa de conclusão de tickets.
+- [ ] Registrar número de intervenções do mantenedor.
+- [ ] Avaliar capacidade de interpretar feedback do CI.
 - [ ] Coletar percepção de realismo.
 - [ ] Decidir se o formato merece expansão.
 

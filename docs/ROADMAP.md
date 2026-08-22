@@ -1,6 +1,6 @@
 # Roadmap Inicial
 
-O roadmap descreve hipóteses de evolução. Não representa compromisso com todas as funcionalidades.
+O roadmap descreve hipóteses de evolução e é a fonte única para a evolução pós-MVP. Não representa compromisso com todas as funcionalidades.
 
 ## Fase 0 — Fundação
 
@@ -143,3 +143,31 @@ Somente se houver necessidade comprovada:
 - visualização de progressão e competências.
 
 A visão de longo prazo poderá convergir para uma **plataforma adaptativa de treinamento de Engenharia de Dados baseada em evidências de competência**, mantendo o simulador profissional como núcleo da experiência.
+
+## Direção arquitetural pós-MVP (hipótese)
+
+O diagrama abaixo representa uma possível direção conceitual para evolução após a validação do MVP. É uma hipótese de arquitetura, não uma arquitetura aprovada nem um compromisso de implementação.
+
+```text
+Skill Profile / Skill Graph
+          │
+          ▼
+   Progression Agent
+          │
+          ▼
+    Task Generator
+          │
+          ▼
+        Ticket
+          │
+          ▼
+    Participante
+          │
+          ▼
+Validação determinística + IA
+          │
+          ▼
+      Evidências
+          │
+          └──────────► Skill Profile
+```

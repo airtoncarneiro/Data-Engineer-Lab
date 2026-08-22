@@ -111,7 +111,6 @@ No MVP, evitar dependências externas obrigatórias para execução das soluçõ
 ├── .env.example
 │
 ├── docs/
-│   ├── VISION.md
 │   ├── DISCOVERY.md
 │   ├── PRINCIPLES.md
 │   ├── ARCHITECTURE.md
@@ -216,56 +215,3 @@ v0.2.0 → novos tickets SQL
 v0.3.0 → modelagem
 v1.0.0 → experiência considerada estável
 ```
-
-## Arquitetura futura
-
-Após validação do MVP, a arquitetura poderá evoluir para manter histórico de evidências e adaptar a progressão:
-
-```text
-                         Skill Profile / Skill Graph
-                                   │
-                                   ▼
-                            Progression Agent
-                                   │
-                                   ▼
-                             Task Generator
-                                   │
-                                   ▼
-                                Ticket
-                                   │
-                                   ▼
-                             Participante
-                                   │
-                                   ▼
-                  validações determinísticas + IA
-                                   │
-                                   ▼
-                              Evidências
-                                   │
-                                   └──────────────► Skill Profile
-```
-
-Uma plataforma centralizada poderá complementar esse ciclo quando houver necessidade comprovada:
-
-```text
-GitHub
-   │
-   ├── CI Validator
-   │
-   └── Result Event
-          │
-          ▼
-       API / Backend
-          │
-          ├── users
-          ├── progress
-          ├── evidence
-          ├── skills
-          ├── scores
-          └── badges
-                 │
-                 ▼
-               Portal
-```
-
-Skill Graph sofisticado, progressão autônoma e plataforma centralizada **não fazem parte do MVP**.
