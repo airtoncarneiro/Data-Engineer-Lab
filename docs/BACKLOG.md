@@ -33,11 +33,11 @@ Backlog preliminar para iniciar o MVP. A ordem poderá mudar conforme decisões 
 ## Épico 4 — Framework de tickets
 
 - [ ] Definir template de ticket.
-- [ ] Definir convenção de IDs.
+- [x] Definir convenção de IDs.
 - [ ] Definir níveis de dificuldade.
 - [ ] Definir estrutura de dependências entre tickets.
 - [ ] Definir critérios de aceite.
-- [ ] Definir estrutura de arquivos para solução.
+- [x] Definir estrutura de arquivos para solução.
 
 ## Épico 5 — Onboarding
 

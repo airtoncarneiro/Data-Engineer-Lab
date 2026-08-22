@@ -102,7 +102,7 @@ Developer Environment
 
 No MVP, evitar dependências externas obrigatórias para execução das soluções e validações determinísticas. Recursos de IA podem ser desacoplados do ambiente técnico mínimo do participante quando necessário.
 
-## Estrutura proposta do repositório
+## Estrutura do repositório
 
 ```text
 .
@@ -137,7 +137,7 @@ No MVP, evitar dependências externas obrigatórias para execução das soluçõ
 │   └── ...
 │
 ├── tests/
-│   ├── ticket_001/
+│   ├── ticket-001/
 │   ├── ticket_002/
 │   └── ...
 │
@@ -147,7 +147,7 @@ No MVP, evitar dependências externas obrigatórias para execução das soluçõ
     └── pull_request_template.md
 ```
 
-A estrutura é uma proposta inicial e deverá ser validada durante a implementação do MVP.
+A estrutura do repositório segue a convenção de IDs e caminhos definida para o MVP: tickets usam o identificador numérico de três dígitos no nome do arquivo; soluções e testes usam o formato `ticket-NNN/`.
 
 Componentes específicos para geração de tickets e registro de evidências deverão ser introduzidos apenas quando seus contratos forem definidos, evitando antecipar diretórios ou serviços sem necessidade concreta.
 
