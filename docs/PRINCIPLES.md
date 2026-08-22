@@ -34,18 +34,24 @@ A empresa fictícia deve possuir continuidade. Sistemas, tabelas, regras e decis
 
 Nem toda informação necessária precisa estar no enunciado. Documentação, schema, código e dados fazem parte da investigação.
 
-## 9. Feedback automatizado primeiro
+## 9. Orientar sem ensinar a solução
+
+O simulador não é um curso. Os desafios podem fornecer Learning Resources e referências técnicas para que o participante adquira ou revise o conhecimento necessário, mas esses materiais não devem revelar diretamente a solução da atividade.
+
+Os recursos devem priorizar conceitos reutilizáveis e fontes confiáveis, especialmente documentação oficial. O participante decide se precisa consultá-los.
+
+## 10. Feedback automatizado primeiro
 
 O projeto deve escalar sem depender de revisão humana para cada participante.
 
-## 10. Conteúdo é o principal ativo
+## 11. Conteúdo é o principal ativo
 
 Infraestrutura deve permanecer simples sempre que possível. A qualidade da empresa simulada, dos dados, dos tickets e dos critérios de validação é mais importante que uma plataforma sofisticada.
 
-## 11. MVP antes de plataforma
+## 12. MVP antes de plataforma
 
 Não construir portal, backend, ranking ou arquitetura distribuída antes de validar que a experiência básica gera valor.
 
-## 12. IA aumenta escala, não reduz qualidade
+## 13. IA aumenta escala, não reduz qualidade
 
 Agentes poderão apoiar geração e revisão de conteúdo, mas desafios oficiais precisam ser coerentes, reproduzíveis e tecnicamente verificáveis.
