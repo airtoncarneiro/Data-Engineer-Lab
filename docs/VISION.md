@@ -45,6 +45,20 @@ A experiência pode ser entendida como um:
 
 O participante entra em uma empresa fictícia, conhece seus sistemas e dados, recebe demandas e evolui conforme entrega soluções cada vez mais complexas.
 
+## Direção evolutiva
+
+A evolução estratégica do produto poderá levá-lo de um simulador com desafios progressivos para uma **plataforma adaptativa de treinamento de Engenharia de Dados baseada em evidências de competência**.
+
+Essa direção não substitui o conceito de estágio simulado. Ela amplia o modelo, permitindo que desafios, avaliação e progressão utilizem evidências produzidas pelas entregas do participante.
+
+O ciclo conceitual dessa evolução é:
+
+**Competência → Evidência → Desafio → Avaliação → Progressão**
+
+A IA é um mecanismo de implementação dessa visão, não a identidade central do produto.
+
+A evolução deverá ocorrer incrementalmente. O MVP pode utilizar IA para geração de tickets e feedback sem depender de Skill Graph, inferência contínua de nível ou progressão totalmente autônoma.
+
 ## Critério de sucesso da visão
 
 O produto terá atingido sua visão quando um participante puder dizer:

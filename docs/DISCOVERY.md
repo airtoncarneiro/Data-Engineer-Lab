@@ -82,6 +82,23 @@ Exemplo: se uma demanda exige conhecimento de PostgreSQL Window Functions, o tic
 
 A intenção é reproduzir um comportamento profissional: diante de uma demanda que exige conhecimento ainda não dominado, o participante identifica a lacuna, consulta documentação ou material técnico e aplica o conhecimento ao problema.
 
+### 6.2 Geração de tickets por IA
+
+A geração assistida de tickets por IA faz parte da direção do MVP.
+
+O gerador deverá receber informações estruturadas, como nível, domínio, competências ou conceitos-alvo e restrições do ambiente, e produzir uma proposta de ticket compatível com as convenções do projeto.
+
+A proposta gerada deverá preservar os princípios pedagógicos do simulador:
+
+- representar uma demanda profissional plausível;
+- evitar indicar diretamente a solução técnica;
+- incluir contexto, objetivo, requisitos, critérios de aceite e entregáveis;
+- relacionar Learning Resources quando aplicável;
+- respeitar dificuldade, pré-requisitos e tecnologias disponíveis;
+- permitir validação objetiva sempre que possível.
+
+**Geração por IA não significa publicação autônoma.** Tickets oficiais continuam sujeitos a validação antes da publicação no catálogo do simulador.
+
 ## 7. Jornada do participante
 
 ### Entrada
@@ -109,6 +126,8 @@ Abre uma Pull Request no próprio fork.
 ### Validação
 
 GitHub Actions executa testes automatizados e informa se os critérios verificáveis foram atendidos.
+
+Quando aplicável, a validação poderá combinar evidências determinísticas com análise assistida por IA para produzir feedback técnico mais contextualizado.
 
 ### Evolução
 
@@ -157,6 +176,8 @@ Possível sequência:
 
 Essa sequência é indicativa e deverá ser refinada após o MVP.
 
+No MVP, o nível e os conceitos-alvo podem ser informados explicitamente ao gerador de tickets. A inferência automática contínua do nível do participante e a seleção autônoma da próxima competência são evoluções posteriores.
+
 ## 10. Validação automática
 
 A validação não deverá depender apenas da comparação textual com uma resposta oficial.
@@ -175,6 +196,16 @@ Exemplos para SQL:
 
 Isso permite múltiplas implementações corretas.
 
+A avaliação poderá evoluir para um modelo híbrido:
+
+1. testes e verificações determinísticas produzem evidências objetivas;
+2. IA analisa essas evidências e, quando necessário, aspectos menos determinísticos;
+3. o participante recebe feedback técnico contextualizado.
+
+O LLM não deve ser a única autoridade para critérios objetivos que possam ser verificados deterministicamente.
+
+O histórico de evidências de competência pode começar de forma simples no MVP, sem exigir um modelo sofisticado de Skill Graph.
+
 ## 11. Gamificação
 
 Gamificação é uma possibilidade, não requisito do MVP.
@@ -192,11 +223,16 @@ A gamificação não deve substituir a qualidade técnica nem incentivar soluç�
 
 ## 12. Uso de IA e agentes
 
-IA poderá reduzir o custo de criação e manutenção do simulador.
+IA poderá reduzir o custo de criação e manutenção do simulador e melhorar personalização e feedback.
 
-Possíveis papéis futuros:
+No MVP, o uso prioritário é:
 
-- gerar propostas de tickets;
+- gerar propostas estruturadas de tickets a partir de nível, domínio, competências ou conceitos-alvo;
+- apoiar a criação de critérios de aceite e entregáveis;
+- apoiar feedback técnico sobre entregas, preferencialmente baseado em evidências produzidas por validações determinísticas.
+
+Possibilidades evolutivas:
+
 - gerar massas de dados;
 - criar casos de teste;
 - atuar como revisor técnico;
@@ -204,11 +240,15 @@ Possíveis papéis futuros:
 - identificar ambiguidades em tickets;
 - simular solicitantes e stakeholders;
 - produzir variações de cenários;
-- validar desafios antes da publicação.
+- validar desafios antes da publicação;
+- inferir competências a partir do histórico;
+- selecionar autonomamente a próxima competência ou desafio.
 
 Uma arquitetura multiagente poderá separar responsabilidades, por exemplo:
 
-**Ticket Designer → Data Generator → Test Designer → Reviewer → Publisher**.
+**Ticket Designer → Data Generator → Test Designer → Reviewer → Publisher**
+
+Essa arquitetura completa não é requisito do MVP.
 
 Conteúdo gerado por IA deverá passar por validação antes de se tornar parte oficial do simulador.
 
@@ -216,7 +256,7 @@ Conteúdo gerado por IA deverá passar por validação antes de se tornar parte 
 
 ### Objetivo
 
-Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" produz uma experiência útil de prática.
+Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" produz uma experiência útil de prática, incluindo a viabilidade da geração assistida de tickets por IA sem comprometer a qualidade pedagógica.
 
 ### Escopo
 
@@ -232,7 +272,10 @@ Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" pr
 - Pull Request no fork;
 - GitHub Actions;
 - testes automáticos;
-- Learning Resources relacionados aos tickets, quando aplicável.
+- Learning Resources relacionados aos tickets, quando aplicável;
+- geração assistida de propostas de tickets por IA;
+- estrutura mínima para registrar evidências produzidas pela avaliação;
+- avaliação híbrida entre verificações determinísticas e feedback por IA quando viável.
 
 ### Fora do MVP
 
@@ -242,7 +285,10 @@ Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" pr
 - ranking global;
 - pagamento;
 - infraestrutura cloud obrigatória;
-- agentes autônomos publicando tickets;
+- publicação totalmente autônoma de tickets por agentes;
+- Skill Graph sofisticado;
+- inferência automática contínua de nível;
+- Progression Agent decidindo autonomamente a próxima competência;
 - Airflow e demais trilhas.
 
 ## 14. Questões em aberto
@@ -257,6 +303,9 @@ As seguintes decisões serão tratadas durante o detalhamento:
 - possibilidade de dependências entre tickets;
 - estrutura e localização dos Learning Resources no repositório;
 - política para uso de LLMs pelos participantes;
+- contrato/schema de entrada e saída do gerador de tickets;
+- processo de revisão e aprovação de tickets gerados por IA;
+- formato mínimo para armazenar evidências de competência;
 - modelo futuro de pontuação;
 - identidade e domínio da empresa fictícia;
 - licença do projeto.

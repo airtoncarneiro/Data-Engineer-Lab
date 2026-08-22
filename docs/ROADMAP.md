@@ -13,13 +13,14 @@ Entregas:
 - criar repositório;
 - estruturar documentação;
 - definir convenções de tickets;
+- definir schema mínimo para tickets estruturados;
 - criar Docker Compose;
 - criar PostgreSQL inicial;
 - definir mecanismo de reset do ambiente.
 
 ## Fase 1 — MVP SQL
 
-Objetivo: validar a experiência principal.
+Objetivo: validar a experiência principal e a geração assistida de desafios.
 
 Entregas:
 
@@ -31,11 +32,15 @@ Entregas:
 - testes automáticos;
 - GitHub Actions;
 - documentação para fork e sincronização com upstream;
+- gerador assistido por IA para propostas estruturadas de tickets;
+- validação humana/editorial antes da publicação de tickets gerados;
+- estrutura mínima para registrar evidências objetivas das entregas;
+- feedback por IA sobre entregas quando viável, apoiado por resultados determinísticos;
 - teste com primeiros usuários.
 
 Critério de saída:
 
-Participantes externos conseguem executar onboarding, resolver tickets e interpretar feedback do CI sem intervenção constante do mantenedor.
+Participantes externos conseguem executar onboarding, resolver tickets e interpretar feedback do CI sem intervenção constante do mantenedor. O projeto também consegue gerar propostas de tickets por IA que respeitam as convenções pedagógicas e técnicas antes de revisão/publicação.
 
 ## Fase 2 — SQL avançado e modelagem
 
@@ -48,7 +53,8 @@ Possibilidades:
 - análise de planos;
 - modelagem dimensional;
 - problemas de qualidade;
-- mudanças de regra de negócio.
+- mudanças de regra de negócio;
+- variações de desafios geradas a partir de competências e dificuldade informadas.
 
 ## Fase 3 — Python e ETL/ELT
 
@@ -101,19 +107,25 @@ Tickets deixam de ser apenas novas implementações e passam a incluir:
 - reprocessamento;
 - investigação de causa raiz.
 
-## Fase 7 — IA e geração assistida de conteúdo
+## Fase 7 — IA avançada e adaptação
 
-Objetivo: aumentar a capacidade de criação e manutenção de desafios.
+Objetivo: evoluir da geração assistida do MVP para personalização e automação baseadas em evidências.
 
 Possibilidades:
 
-- agente gerador de tickets;
 - agente gerador de datasets;
 - agente de testes;
 - agente revisor;
 - agente simulando stakeholder;
-- geração de variações de tickets;
-- avaliação assistida por LLM para critérios subjetivos.
+- avaliação assistida por LLM para critérios subjetivos;
+- Skill Graph;
+- inferência de competências a partir do histórico;
+- seleção adaptativa da próxima competência;
+- Progression Agent;
+- geração de variações individualizadas de tickets;
+- arquitetura multiagente.
+
+A publicação totalmente autônoma de desafios deverá ser considerada apenas se houver mecanismos suficientes de validação, observabilidade e governança.
 
 ## Fase 8 — Plataforma opcional
 
@@ -123,7 +135,11 @@ Somente se houver necessidade comprovada:
 - autenticação;
 - perfil do participante;
 - histórico centralizado;
+- evidências de competência centralizadas;
 - badges;
 - ranking;
 - portal web;
-- métricas de aprendizagem/prática.
+- métricas de aprendizagem/prática;
+- visualização de progressão e competências.
+
+A visão de longo prazo poderá convergir para uma **plataforma adaptativa de treinamento de Engenharia de Dados baseada em evidências de competência**, mantendo o simulador profissional como núcleo da experiência.

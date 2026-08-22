@@ -32,6 +32,60 @@ Definir uma arquitetura mínima para o MVP do simulador sem antecipar componente
           ticket concluído        feedback no CI
 ```
 
+## Geração assistida de tickets
+
+O MVP deverá permitir geração assistida de propostas de tickets por IA sem tornar a publicação autônoma.
+
+```text
+Perfil / nível / domínio / conceitos-alvo
+                   │
+                   ▼
+           Task Generator (IA)
+                   │
+                   ▼
+          proposta estruturada
+                   │
+                   ▼
+         validação / revisão
+                   │
+                   ▼
+             ticket oficial
+```
+
+O gerador deverá trabalhar sobre um contrato estruturado e respeitar as convenções pedagógicas do projeto.
+
+A existência do gerador não implica Skill Graph, perfil centralizado ou Progression Agent no MVP. Inicialmente, nível e conceitos-alvo podem ser informados explicitamente.
+
+## Avaliação híbrida
+
+A avaliação deverá priorizar verificações determinísticas sempre que o critério puder ser testado objetivamente.
+
+```text
+Entrega do participante
+          │
+          ▼
+testes / validações determinísticas
+          │
+          ├── execução
+          ├── resultado
+          ├── regras de negócio
+          ├── restrições
+          └── performance, quando aplicável
+          │
+          ▼
+     evidências objetivas
+          │
+          ▼
+ análise/feedback por IA
+          │
+          ▼
+ feedback contextualizado
+```
+
+O LLM não deve substituir testes objetivos quando esses testes forem possíveis.
+
+O MVP pode armazenar evidências de forma simples e local. Um modelo sofisticado de competências é uma evolução posterior.
+
 ## Ambiente local
 
 ```text
@@ -46,7 +100,7 @@ Developer Environment
         └── dados iniciais
 ```
 
-No MVP, evitar dependências externas obrigatórias.
+No MVP, evitar dependências externas obrigatórias para execução das soluções e validações determinísticas. Recursos de IA podem ser desacoplados do ambiente técnico mínimo do participante quando necessário.
 
 ## Estrutura proposta do repositório
 
@@ -96,6 +150,8 @@ No MVP, evitar dependências externas obrigatórias.
 
 A estrutura é uma proposta inicial e deverá ser validada durante a implementação do MVP.
 
+Componentes específicos para geração de tickets e registro de evidências deverão ser introduzidos apenas quando seus contratos forem definidos, evitando antecipar diretórios ou serviços sem necessidade concreta.
+
 ## Separação entre conteúdo e solução
 
 `tickets/` pertence ao produto e é atualizado pelo upstream.
@@ -127,6 +183,8 @@ O GitHub Actions deverá:
 6. executar testes do ticket;
 7. publicar feedback;
 8. retornar sucesso ou falha.
+
+Resultados do CI poderão servir como evidências para feedback assistido por IA.
 
 ## Segurança dos testes
 
@@ -161,7 +219,33 @@ v1.0.0 → experiência considerada estável
 
 ## Arquitetura futura
 
-Somente após validação do MVP poderão ser considerados:
+Após validação do MVP, a arquitetura poderá evoluir para manter histórico de evidências e adaptar a progressão:
+
+```text
+                         Skill Profile / Skill Graph
+                                   │
+                                   ▼
+                            Progression Agent
+                                   │
+                                   ▼
+                             Task Generator
+                                   │
+                                   ▼
+                                Ticket
+                                   │
+                                   ▼
+                             Participante
+                                   │
+                                   ▼
+                  validações determinísticas + IA
+                                   │
+                                   ▼
+                              Evidências
+                                   │
+                                   └──────────────► Skill Profile
+```
+
+Uma plataforma centralizada poderá complementar esse ciclo quando houver necessidade comprovada:
 
 ```text
 GitHub
@@ -175,6 +259,8 @@ GitHub
           │
           ├── users
           ├── progress
+          ├── evidence
+          ├── skills
           ├── scores
           └── badges
                  │
@@ -182,4 +268,4 @@ GitHub
                Portal
 ```
 
-Essa arquitetura **não faz parte do MVP**.
+Skill Graph sofisticado, progressão autônoma e plataforma centralizada **não fazem parte do MVP**.
