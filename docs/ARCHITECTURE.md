@@ -2,37 +2,533 @@
 
 ## Objetivo
 
-Definir uma arquitetura mínima para o MVP do simulador sem antecipar componentes que ainda não são necessários.
+Definir a arquitetura mínima aprovada para o MVP local do simulador, suficiente para iniciar a implementação sem antecipar componentes de plataforma.
 
 ## Decisão arquitetural do MVP
 
 O MVP será executado localmente pelo participante e terá como interface principal uma Web UI local.
 
-A arquitetura mínima aprovada é:
+A arquitetura aprovada é:
 
 ```text
 Browser
    │
    ▼
-Local Web UI
+FastAPI + Jinja2 + HTMX
    │
    ▼
-Lab Engine (Python)
-   ├── Onboarding / Journey State
-   ├── PROBE
-   ├── Learner Model
-   ├── Challenge Selector
-   ├── Ticket Generator
-   ├── Validator
-   └── Evidence Engine
+Application
    │
-   ├── PostgreSQL do laboratório
-   └── Persistência local do participante
+   ▼
+Domain
+   │
+   ├──────────────► Infrastructure / PostgreSQL
+   │                  ├── schema lab
+   │                  └── schema company
+   │
+   └──────────────► Infrastructure / AIProvider
+                      └── API compatível com OpenAI, quando habilitada
 ```
 
 O GitHub permanece como repositório de desenvolvimento, versionamento e distribuição do produto, mas não é parte obrigatória do fluxo operacional do participante no MVP.
 
 Fork, branch, Pull Request e GitHub Actions podem ser utilizados no desenvolvimento do projeto, mas não são requisitos para o aluno executar uma jornada, enviar uma solução ou receber validação.
+
+## Stack mínima aprovada
+
+### Runtime e Web UI
+
+- Python 3.11;
+- FastAPI;
+- Jinja2;
+- HTMX;
+- CodeMirror servido localmente;
+- CSS próprio mínimo;
+- assets em `app/web/static/`;
+- templates e routers organizados por feature.
+
+Não haverá Node.js, bundler ou framework SPA no MVP inicial.
+
+### Dependências e configuração
+
+- `uv` para dependências e ambiente virtual;
+- `pyproject.toml` como arquivo central de metadados e configuração;
+- Pydantic para DTOs e contratos;
+- `pydantic-settings` para configuração;
+- `.env` local ignorado pelo Git;
+- `.env.example` versionado;
+- `APP_ENV` com ambientes `development`, `test` e `production-like`;
+- feature flags explícitas, começando por `AI_ENABLED`;
+- fail-fast no startup para configurações obrigatórias.
+
+### Persistência
+
+- PostgreSQL 16 via Docker Compose;
+- aplicação Python executada localmente via `uv` no primeiro momento;
+- SQLAlchemy 2.x;
+- psycopg 3;
+- Alembic para migrations do schema `lab`;
+- scripts SQL versionados para criação e seed do schema `company`.
+
+A mesma instância PostgreSQL será usada com separação lógica:
+
+```text
+PostgreSQL
+├── lab
+│   └── persistência interna da aplicação
+└── company
+    └── dados técnicos usados nos desafios
+```
+
+### Qualidade
+
+- pytest;
+- Ruff para lint e format;
+- mypy com configuração moderada;
+- GitHub Actions para CI do próprio produto;
+- `Makefile` simples para comandos operacionais.
+
+## Estrutura arquitetural do código
+
+A aplicação adotará separação explícita entre `domain`, `application` e `infrastructure`, sem adotar uma Clean Architecture cerimonial.
+
+```text
+web
+ ↓
+application
+ ↓
+domain
+
+infrastructure
+ ↑
+application
+```
+
+Regras:
+
+- `domain` não conhece FastAPI, SQLAlchemy, PostgreSQL ou SDKs externos;
+- `application` coordena casos de uso e define portas necessárias;
+- `infrastructure` implementa persistência, loaders, validadores técnicos e integrações externas;
+- `web` contém apenas apresentação, entrada HTTP e tradução de erros para a UI;
+- lógica pedagógica não deve ser duplicada na Web UI.
+
+## Estrutura inicial do repositório
+
+```text
+.
+├── app/
+│   ├── main.py
+│   ├── web/
+│   │   ├── routes/
+│   │   ├── templates/
+│   │   └── static/
+│   ├── domain/
+│   │   ├── catalog/
+│   │   ├── journey/
+│   │   ├── learner/
+│   │   ├── challenge/
+│   │   └── evidence/
+│   ├── application/
+│   │   ├── ports/
+│   │   ├── onboarding/
+│   │   ├── probe/
+│   │   ├── challenge_selection/
+│   │   └── validation/
+│   └── infrastructure/
+│       ├── ai/
+│       ├── catalog/
+│       ├── database/
+│       │   ├── models/
+│       │   ├── repositories/
+│       │   ├── mappers/
+│       │   └── sqlalchemy_unit_of_work.py
+│       └── validators/
+├── database/
+│   ├── migrations/
+│   ├── company/
+│   │   ├── init/
+│   │   └── seed/
+│   └── validators/
+├── tickets/
+├── probe/
+├── skills/
+├── journeys/
+├── tests/
+│   ├── fakes/
+│   ├── unit/
+│   │   ├── domain/
+│   │   └── application/
+│   ├── integration/
+│   │   ├── database/
+│   │   ├── validators/
+│   │   └── web/
+│   └── fixtures/
+├── docs/
+├── .github/workflows/
+├── docker-compose.yml
+├── pyproject.toml
+├── uv.lock
+├── Makefile
+└── .env.example
+```
+
+Diretórios adicionais só devem ser criados quando houver necessidade concreta.
+
+## Domain, DTOs e persistência
+
+Entidades de domínio serão separadas dos models SQLAlchemy.
+
+- entidades do domínio: `dataclasses`;
+- DTOs e contratos de entrada/saída: Pydantic;
+- models ORM: apenas em `infrastructure/database/models`;
+- conversão ORM ↔ domínio: mappers explícitos;
+- um arquivo por model e por repository.
+
+Value objects leves serão usados quando houver invariantes relevantes, como `Mastery` e `Confidence`, ambos limitados a `0.0..1.0`.
+
+No PostgreSQL, `mastery` e `confidence` serão persistidos como `NUMERIC` com constraint de faixa.
+
+## Ports, repositories e Unit of Work
+
+Dependências externas relevantes serão representadas por `Protocol` na camada `application`.
+
+Portas iniciais previstas:
+
+- `JourneyRepository`;
+- `LearnerModelRepository`;
+- `EvidenceRepository`;
+- `ChallengeRepository`, se necessário;
+- `AIProvider`;
+- `UnitOfWork`.
+
+Não serão criadas interfaces para todas as classes.
+
+A `UnitOfWork` será mínima, implementada como context manager e responsável por coordenar a transação. Repositories não executam `commit()`.
+
+O caso de uso controla a operação completa:
+
+```text
+use case
+  ↓
+with uow
+  ↓
+repositories
+  ↓
+commit ou rollback
+```
+
+No MVP monousuário não será introduzido locking específico para `learner_skill`.
+
+## Casos de uso
+
+Casos de uso serão classes pequenas e explícitas, com método `execute()`, orientadas a uma ação do usuário ou do sistema.
+
+Exemplos:
+
+- `StartJourney`;
+- `ResumeJourney`;
+- `SubmitProbeAnswer`;
+- `SelectNextChallenge`;
+- `SubmitSolution`;
+- `ValidateSolution`;
+- `RecordEvidence`;
+- `CompleteJourney`.
+
+DTOs Pydantic devem ficar próximos da feature correspondente, não em um diretório global genérico.
+
+## Jornada
+
+O MVP terá um único perfil local, sem login, identificado internamente por UUID.
+
+O banco poderá manter várias jornadas históricas, porém no máximo uma jornada ativa por participante.
+
+O estado da jornada será explícito e controlado pelo domínio, usando `Enum` e regras de transição. Estados iniciais previstos:
+
+```text
+NEW
+ONBOARDING
+PROBE
+CHALLENGE
+VALIDATING
+COMPLETED
+```
+
+Biblioteca externa de state machine não é necessária no MVP.
+
+O objetivo profissional será composto por uma opção estruturada com ID estável e contexto livre opcional. As opções serão versionadas em arquivo, por exemplo `journeys/goals.yaml`.
+
+## Learner Model e evidências
+
+O Learner Model mínimo permanece genérico por competência e registra:
+
+- `skill_id`;
+- `mastery`;
+- `confidence`;
+- quantidade de evidências.
+
+A atualização de `mastery` e `confidence` será determinística, simples e auditável no MVP. A regra ficará no domínio, por exemplo em `LearnerModelUpdater`.
+
+A evidência registra componentes auditáveis do cálculo, incluindo:
+
+- origem;
+- valência categórica e magnitude;
+- força categórica e peso numérico;
+- confiança da avaliação;
+- nível de assistência e fator correspondente;
+- impacto calculado;
+- metadata adicional.
+
+Origens iniciais previstas:
+
+```text
+PROBE
+CHALLENGE_VALIDATION
+POST_DELIVERY_QUESTION
+SELF_ASSESSMENT
+RECALIBRATION
+```
+
+A assistência será representada por categoria e fator numérico, sem invalidar automaticamente uma entrega.
+
+O estado corrente ficará em `lab.learner_skill`. A evolução ficará em uma tabela histórica separada, `lab.learner_skill_history`, ligada à evidência que provocou a mudança.
+
+Registro da evidência, atualização de `learner_skill` e criação do histórico ocorrerão na mesma transação.
+
+## Identidade e convenções de persistência
+
+- UUID para entidades persistidas como `learner`, `journey`, `evidence` e `telemetry`;
+- IDs legíveis e estáveis para conteúdo versionado como `ticket_id`, `skill_id` e `probe_question_id`;
+- tabelas e colunas em `snake_case`;
+- tabelas no singular;
+- FKs explícitas;
+- todos os timestamps em UTC com `TIMESTAMPTZ`;
+- Python usando `datetime` timezone-aware;
+- DTOs expondo strings estáveis para enums e IDs.
+
+## Catálogo de competências
+
+Competências terão catálogo central versionado, inicialmente em:
+
+```text
+skills/catalog.yaml
+```
+
+Tickets e questões do PROBE referenciam IDs estáveis, por exemplo:
+
+```text
+sql.filtering
+sql.join
+sql.aggregation
+professional.business_rules
+```
+
+O MVP não exige Skill Graph.
+
+## Catálogo de tickets
+
+Tickets em Markdown com YAML front matter serão a fonte de verdade do catálogo.
+
+Diretrizes:
+
+- identificador numérico de três dígitos;
+- metadados estruturados no front matter;
+- corpo Markdown como demanda apresentada ao participante;
+- skills referenciadas por IDs do catálogo central;
+- validação declarativa quando simples;
+- validador Python adicional quando necessário;
+- `expected.sql` separado por ticket quando a comparação usar query de referência.
+
+O fato de `expected.sql` permanecer no pacote local é uma limitação aceita do MVP. Proteção real de validadores pertence a uma eventual arquitetura remota.
+
+No startup, o Lab Engine deverá:
+
+1. varrer `tickets/**/*.md`;
+2. extrair e validar o front matter com Pydantic;
+3. validar referências a skills, validadores e arquivos esperados;
+4. montar um `TicketCatalog` read-only em memória;
+5. falhar a inicialização se houver ticket inconsistente.
+
+Classes de catálogo e invariantes ficarão em `domain/catalog`; loaders YAML/Markdown ficarão em `infrastructure/catalog`.
+
+## PROBE SQL
+
+As perguntas do PROBE serão conteúdo versionado separado do código, organizado inicialmente em `probe/sql/`.
+
+Tipos suportados desde o início:
+
+- `multiple_choice`;
+- `free_text`;
+- `sql`.
+
+Estratégia de avaliação:
+
+- `multiple_choice`: determinística;
+- `sql`: determinística por execução e validação de resultado;
+- `free_text`: rubrica estruturada, checagens simples e IA opcional.
+
+Cada pergunta, resposta e evidência derivada será persistida para auditoria e recalibração.
+
+## Submissão e validador SQL
+
+No primeiro vertical slice, o participante escreve a solução diretamente na Web UI usando CodeMirror.
+
+A execução inicial será somente leitura (`SELECT`).
+
+O PostgreSQL terá um usuário dedicado para execução do participante, separado da conexão administrativa da aplicação, com:
+
+- acesso controlado ao schema `company`;
+- `search_path = company`;
+- `default_transaction_read_only`;
+- `statement_timeout`.
+
+A validação deverá comparar comportamento/resultado, não o texto SQL.
+
+Quando aplicável, o resultado da solução será normalizado e comparado com o resultado produzido por uma query de referência em `expected.sql`. A comparação deverá tratar explicitamente:
+
+- colunas;
+- valores;
+- `NULL`;
+- tipos quando relevantes;
+- ordem apenas quando fizer parte do critério do ticket.
+
+O contrato definitivo de normalização e erros será fechado durante a implementação do validador.
+
+## Execução de tickets na jornada
+
+Cada atribuição de ticket terá registro próprio, permitindo histórico e retomada. Status explícitos iniciais:
+
+```text
+ASSIGNED
+IN_PROGRESS
+SUBMITTED
+VALIDATED
+SKIPPED
+COMPLETED
+```
+
+Uma direção de persistência é `lab.journey_ticket`, com UUID próprio, `journey_id`, `ticket_id`, status e timestamps relevantes.
+
+## IA
+
+A camada `application` definirá `AIProvider` como porta explícita.
+
+A primeira implementação concreta usará o SDK Python oficial da OpenAI com `base_url` configurável, permitindo integração com APIs compatíveis com OpenAI.
+
+Configurações iniciais:
+
+```text
+AI_ENABLED
+AI_BASE_URL
+AI_API_KEY
+AI_MODEL
+AI_TIMEOUT_SECONDS
+```
+
+A IA é opcional. Se `AI_ENABLED=false`, o ciclo determinístico deve continuar funcionando. Indisponibilidade do provider não deve impedir validações objetivas básicas.
+
+O acesso ao PostgreSQL e o Lab Engine serão síncronos inicialmente. FastAPI pode usar handlers assíncronos na borda sem propagar uma stack async desnecessária pelo domínio e persistência.
+
+## Web UI
+
+A Web UI utilizará:
+
+```text
+FastAPI
+├── routers por feature
+├── Jinja2
+├── HTMX
+└── static
+    ├── css
+    ├── js
+    └── vendor/codemirror
+```
+
+Templates serão organizados por fluxo, por exemplo `onboarding/`, `probe/`, `challenge/` e `progress/`.
+
+A aplicação utilizará exceções tipadas no domínio/application e handlers FastAPI para transformá-las em feedback apropriado à interface.
+
+## Startup, configuração e catálogos
+
+O lifespan do FastAPI será responsável por validar a aplicação antes de aceitar requisições:
+
+```text
+Settings válidos?
+    ↓
+PostgreSQL disponível?
+    ↓
+SkillCatalog válido?
+    ↓
+TicketCatalog válido?
+    ↓
+ProbeCatalog válido?
+    ↓
+GoalCatalog válido?
+    ↓
+READY
+```
+
+Os catálogos serão montados como objetos read-only e injetados nos casos de uso. Não serão usados dicionários globais mutáveis nem reload de arquivos em cada operação.
+
+## Logging, telemetria e healthchecks
+
+Logging utilizará a biblioteca padrão do Python, com configuração centralizada:
+
+- texto legível em `development`;
+- JSON estruturado em `production-like`;
+- `request_id` UUID por requisição HTTP propagado nos logs;
+- contexto adicional como `journey_id` e `ticket_id` quando disponível.
+
+A aplicação terá:
+
+- `/health` para liveness;
+- `/ready` para readiness, verificando ao menos PostgreSQL e estado de inicialização.
+
+Telemetria será persistida em `lab.telemetry`, com:
+
+- UUID;
+- `journey_id` quando aplicável;
+- `event_type`;
+- `event_version`;
+- timestamp UTC;
+- `payload JSONB`.
+
+Eventos iniciais plausíveis incluem início/retomada de jornada, respostas do PROBE, atribuição/submissão/validação de ticket, uso de assistência, `skip` e sinalizações de dificuldade.
+
+## Testes
+
+Estratégia:
+
+- testes unitários de `domain` e `application` sem PostgreSQL;
+- repositories in-memory reutilizáveis em `tests/fakes/`;
+- testes de integração específicos para banco, validadores e Web UI;
+- PostgreSQL usado somente onde a integração real agrega confiança.
+
+## Makefile e CI
+
+O `Makefile` deverá expor comandos simples como:
+
+```text
+make dev
+make test
+make lint
+make format
+make db-up
+make db-down
+make db-migrate
+make db-reset
+```
+
+GitHub Actions deverá validar o próprio repositório com, no mínimo:
+
+```text
+uv sync
+ruff check
+ruff format --check
+mypy
+pytest
+```
+
+GitHub Actions não será o mecanismo de validação das soluções do participante.
 
 ## Vertical slice inicial
 
@@ -49,9 +545,9 @@ criar / atualizar Learner Model
    ↓
 selecionar 1 ticket
    ↓
-participante resolve
+participante resolve no editor SQL
    ↓
-validar SQL
+validar SQL localmente
    ↓
 registrar evidências
    ↓
@@ -60,220 +556,28 @@ atualizar Learner Model
 selecionar próximo ticket
 ```
 
-Esse fluxo é o núcleo do produto. Funcionalidades adicionais devem ser introduzidas apenas quando contribuírem para validar ou melhorar esse ciclo.
+Esse fluxo é o núcleo do produto.
 
-## Lab Engine
+## Decisões ainda abertas para implementação
 
-O Lab Engine é o núcleo de aplicação do MVP. Ele coordena regras de negócio e componentes da experiência, sem depender da Web UI para implementar lógica pedagógica.
+A arquitetura já está suficientemente definida para iniciar o MVP. Permanecem como decisões de implementação, a serem fechadas ao construir o vertical slice:
 
-Responsabilidades iniciais:
+- modelo completo das tabelas e constraints do schema `lab`;
+- contrato Pydantic definitivo do front matter de tickets;
+- contrato definitivo das questões do PROBE;
+- conjunto inicial de skills do catálogo;
+- fórmula determinística exata de atualização de `mastery` e `confidence`;
+- regras mínimas do Challenge Selector;
+- campos e transições finais de `journey_ticket`;
+- contrato de normalização e mensagens do validador SQL;
+- empresa fictícia, domínio inicial e dataset;
+- composição exata do primeiro PROBE e dos primeiros tickets do vertical slice.
 
-- iniciar e retomar uma jornada;
-- registrar objetivo profissional;
-- conduzir o PROBE;
-- persistir e atualizar o Learner Model;
-- selecionar o próximo desafio;
-- disponibilizar tickets à interface;
-- executar validações determinísticas;
-- registrar evidências e telemetria;
-- controlar assistência, `skip` e recalibração;
-- acionar geração assistida de desafios quando aplicável.
-
-A Web UI deve consumir essas capacidades sem duplicar regras centrais.
-
-No MVP, não é necessário criar uma API de rede independente. A separação entre UI e Lab Engine deve ocorrer em código e contratos internos, permitindo que uma API seja introduzida posteriormente se a evolução para plataforma exigir.
-
-## Web UI local
-
-A Web UI é a interface operacional do participante no MVP.
-
-Ela deve permitir, progressivamente:
-
-- iniciar ou retomar a jornada;
-- informar objetivo profissional;
-- responder ao PROBE;
-- visualizar o ticket corrente;
-- informar ou apontar a solução SQL conforme o contrato definido;
-- executar a validação;
-- receber feedback;
-- solicitar assistência;
-- pular desafios;
-- visualizar progresso qualitativo quando aplicável.
-
-A UI não deve conter lógica de avaliação ou progressão que pertença ao Lab Engine.
-
-## Geração assistida de tickets
-
-O MVP deverá permitir geração assistida de propostas de tickets por IA sem tornar a publicação autônoma.
-
-```text
-Perfil / nível / domínio / conceitos-alvo
-                   │
-                   ▼
-           Task Generator (IA)
-                   │
-                   ▼
-          proposta estruturada
-                   │
-                   ▼
-         validação / revisão
-                   │
-                   ▼
-             ticket qualificado
-```
-
-O gerador deverá trabalhar sobre um contrato estruturado e respeitar as convenções pedagógicas do projeto.
-
-O lifecycle mínimo continua sendo:
-
-`candidate -> validated -> trialed -> published`
-
-A existência do gerador não implica Skill Graph, perfil centralizado ou Progression Agent no MVP. Inicialmente, nível e conceitos-alvo podem ser informados explicitamente ou derivados do Learner Model mínimo.
-
-## Avaliação híbrida
-
-A avaliação deverá priorizar verificações determinísticas sempre que o critério puder ser testado objetivamente.
-
-```text
-Entrega do participante
-          │
-          ▼
-testes / validações determinísticas
-          │
-          ├── execução
-          ├── resultado
-          ├── regras de negócio
-          ├── restrições
-          └── performance, quando aplicável
-          │
-          ▼
-     evidências objetivas
-          │
-          ▼
- análise/feedback por IA
-          │
-          ▼
- feedback contextualizado
-```
-
-O LLM não deve substituir testes objetivos quando esses testes forem possíveis.
-
-O MVP pode armazenar evidências de forma simples e local. Um modelo sofisticado de competências é uma evolução posterior.
-
-## Ambiente local
-
-```text
-Developer / Learner Environment
-│
-├── Browser
-├── aplicação local
-│   ├── Web UI
-│   └── Lab Engine
-└── Docker Compose
-    └── PostgreSQL
-        ├── schemas
-        ├── tabelas
-        └── dados iniciais
-```
-
-No MVP, evitar dependências externas obrigatórias para execução das soluções e validações determinísticas. Recursos de IA devem ser desacoplados do ambiente técnico mínimo quando possível, de forma que falhas ou ausência do provedor de IA não impeçam validações determinísticas básicas.
-
-## Persistência local
-
-O MVP deve persistir localmente, no mínimo:
-
-- estado da jornada;
-- objetivo profissional;
-- Learner Model;
-- evidências;
-- telemetria relevante;
-- estado dos desafios gerados, quando aplicável.
-
-A tecnologia exata de persistência deve permanecer simples. O PostgreSQL do laboratório pode ser reutilizado quando isso reduzir complexidade, desde que dados do participante e dados usados nos desafios permaneçam logicamente separados.
-
-Persistência centralizada, contas e sincronização entre dispositivos pertencem à evolução para plataforma e não são requisitos do MVP.
-
-## Estrutura inicial do repositório
-
-A estrutura deve evoluir conforme os contratos forem implementados. Uma direção mínima é:
-
-```text
-.
-├── README.md
-├── docker-compose.yml
-├── .env.example
-│
-├── docs/
-│   ├── DISCOVERY.md
-│   ├── PRINCIPLES.md
-│   ├── ARCHITECTURE.md
-│   ├── ROADMAP.md
-│   └── BACKLOG.md
-│
-├── app/
-│   ├── web/
-│   └── lab_engine/
-│
-├── database/
-│   ├── migrations/
-│   ├── seed/
-│   └── init/
-│
-├── tickets/
-│   ├── 000-onboarding.md
-│   ├── 001-....md
-│   └── ...
-│
-├── solutions/
-│   ├── ticket-001/
-│   └── ...
-│
-└── tests/
-    ├── ticket-001/
-    └── ...
-```
-
-Os nomes finais de módulos e diretórios devem ser definidos durante a implementação, evitando antecipar abstrações sem necessidade concreta.
-
-Tickets usam identificador numérico de três dígitos. Soluções e testes, quando persistidos em arquivos, devem manter associação inequívoca ao ticket.
-
-## Separação entre produto, conteúdo e solução
-
-`tickets/` pertence ao produto e contém desafios qualificados ou artefatos versionados do catálogo.
-
-`solutions/` representa uma possível área local de trabalho do participante quando o contrato de entrega exigir arquivos. A Web UI também pode receber ou referenciar a solução sem exigir operações Git do aluno.
-
-O repositório GitHub contém o código e o conteúdo oficial do produto. O participante não precisa receber todo o histórico de desenvolvimento nem utilizar fork para operar o MVP.
-
-## Banco de dados
-
-Inicialmente:
-
-- PostgreSQL;
-- executado via Docker;
-- schema versionado;
-- seed determinístico;
-- reconstrução completa do ambiente por comando;
-- volume suficiente para tornar os desafios realistas sem prejudicar máquinas pessoais.
-
-## Validação local
-
-O Lab Engine deverá:
-
-1. garantir que o ambiente necessário esteja disponível;
-2. preparar ou resetar o estado do banco quando necessário;
-3. identificar o ticket associado à entrega;
-4. executar a solução em ambiente controlado;
-5. executar testes e verificações do ticket;
-6. produzir evidências objetivas;
-7. retornar feedback claro à Web UI;
-8. atualizar o estado da jornada quando aplicável.
-
-GitHub Actions pode continuar existindo posteriormente para validar o próprio repositório do produto, mas não substitui o validador local do MVP.
+Esses pontos não bloqueiam o início da implementação da fundação.
 
 ## Segurança dos testes
 
-No MVP, testes e critérios determinísticos podem permanecer no pacote local para simplificar a implementação.
+No MVP, testes, validadores e queries de referência permanecem no pacote local para simplificar a implementação.
 
 Isso permite inspeção por participantes com acesso aos arquivos locais. Antes de tratar o produto como sistema competitivo ou comercial com avaliação de alta confiança, deverá ser avaliada uma estratégia de proteção dos validadores.
 
@@ -299,12 +603,7 @@ Web Client
 Backend / API
     │
     ▼
-Lab Engine
-    ├── Journey
-    ├── Learner Model
-    ├── Challenge Engine
-    ├── Validator
-    └── Evidence Engine
+Application / Domain
     │
     ├── persistência centralizada
     └── ambientes de execução
@@ -314,12 +613,13 @@ Autenticação, mensalidade, contas, persistência centralizada, execução remo
 
 ## Versionamento
 
-Sugestão inicial:
+Direção inicial:
 
 - releases semânticos para evolução do simulador;
 - tickets com identificador imutável;
 - tickets publicados não devem sofrer mudanças incompatíveis;
-- correções relevantes devem ser registradas em changelog.
+- correções relevantes devem ser registradas em changelog;
+- o repositório permanece privado enquanto a hipótese comercial estiver em validação, sem licença pública definida neste estágio.
 
 Exemplo:
 

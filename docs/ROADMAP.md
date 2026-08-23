@@ -14,23 +14,42 @@ Essas dimensões podem ser combinadas ao longo das fases. A introdução de cen�
 
 Objetivo: transformar o Discovery em uma aplicação local executável.
 
+A arquitetura-base e a stack mínima para esta fase já estão aprovadas. A implementação deve seguir:
+
+- Python 3.11;
+- FastAPI + Jinja2 + HTMX;
+- CodeMirror e assets frontend locais;
+- PostgreSQL 16 via Docker Compose;
+- schemas `lab` e `company` na mesma instância;
+- SQLAlchemy 2.x + psycopg 3;
+- Alembic para `lab` e scripts SQL versionados para `company`;
+- `uv` + `pyproject.toml`;
+- Pydantic + `pydantic-settings`;
+- arquitetura `domain` / `application` / `infrastructure`;
+- repositories e Unit of Work por `Protocol` nas fronteiras necessárias;
+- pytest, Ruff e mypy;
+- GitHub Actions para CI do próprio produto.
+
 Entregas:
 
-- definir nome provisório;
-- definir empresa fictícia;
-- estruturar documentação;
-- definir convenções de tickets;
-- definir schema mínimo para tickets estruturados;
-- incluir tipo, competências-alvo, dificuldade estimada e pré-requisitos no modelo de ticket;
-- criar Docker Compose;
-- criar PostgreSQL inicial;
-- definir mecanismo de reset do ambiente;
-- definir estrutura mínima do Lab Engine em Python;
-- definir contratos internos entre Lab Engine e Web UI;
-- definir persistência local mínima para jornada, Learner Model e evidências;
-- criar Web UI local mínima para operar o vertical slice.
+- definir nome provisório e empresa fictícia;
+- definir domínio inicial e dataset do schema `company`;
+- implementar estrutura inicial do repositório;
+- implementar Docker Compose e PostgreSQL;
+- implementar configuração e comandos de desenvolvimento;
+- implementar persistência mínima no schema `lab`;
+- definir contratos Pydantic finais de tickets e PROBE;
+- implementar carregamento fail-fast de skills, tickets, objetivos e PROBE;
+- implementar Web UI local mínima;
+- implementar editor SQL e executor somente leitura;
+- implementar validador determinístico mínimo;
+- implementar Learner Model, evidências e histórico mínimos;
+- implementar primeiro Challenge Selector auditável;
+- criar CI mínimo do produto.
 
 O GitHub permanece como repositório de desenvolvimento, versionamento e distribuição, mas fork, Pull Request e GitHub Actions não são requisitos operacionais do participante.
+
+A Fase 0 termina quando o primeiro vertical slice estiver tecnicamente executável ponta a ponta, ainda que com catálogo mínimo.
 
 ## Fase 1 — MVP SQL
 
@@ -43,16 +62,24 @@ A implementação deve começar por um **vertical slice ponta a ponta** antes da
 Entregas:
 
 - onboarding operado pela aplicação local;
-- coleta do objetivo profissional antes do diagnóstico;
+- coleta do objetivo profissional estruturado, com contexto livre opcional;
 - PROBE SQL curto, discriminativo e adaptativo, cobrindo escrita e compreensão conceitual;
-- PROBE híbrido, prioritariamente conversacional e com execução real quando necessária para aumentar a confiança;
+- suporte a questões `multiple_choice`, `free_text` e `sql`;
+- avaliação determinística para múltipla escolha e SQL, com rubrica estruturada e IA opcional para texto livre;
+- persistência das perguntas, respostas e evidências do PROBE;
 - Learner Model mínimo e persistente, genérico por competência, com `mastery`, `confidence` e quantidade de evidências;
+- atualização determinística e auditável do Learner Model;
+- histórico separado das alterações do Learner Model;
 - separação entre competências técnicas e profissionais, sendo as profissionais inferidas principalmente durante os tickets;
 - Lab Engine Python responsável por jornada, PROBE, Learner Model, seleção, validação, evidências e assistência;
 - Web UI local como interface principal do participante;
 - persistência local da jornada e retomada do ponto anterior;
 - PostgreSQL local via Docker para ambiente técnico dos desafios;
-- validador SQL local e determinístico;
+- usuário PostgreSQL dedicado e somente leitura para execução de SQL do participante no vertical slice;
+- editor SQL CodeMirror na Web UI;
+- validador SQL local e determinístico, comparando resultado em vez de texto SQL;
+- tickets Markdown com YAML front matter como fonte de verdade;
+- catálogo central de competências com IDs estáveis;
 - catálogo SQL suficiente para compor jornadas distintas;
 - jornada individual de aproximadamente 10 desafios, usando o número como referência de duração e não como critério de conclusão;
 - seleção do próximo desafio por mecanismo híbrido: regras auditáveis definem prioridades/restrições e IA pode apoiar seleção ou construção dentro desses limites;
@@ -61,18 +88,21 @@ Entregas:
 - distinção entre entrega tecnicamente concluída e domínio demonstrado;
 - perguntas pós-entrega quando úteis para verificar compreensão, decisões e trade-offs;
 - pesquisa, documentação e IA permitidas ao participante;
-- registro do nível de assistência direcionada utilizado para ponderar a força das evidências;
+- registro categórico e numérico do nível de assistência direcionada utilizado para ponderar a força das evidências;
 - tempo de execução registrado apenas como telemetria no MVP;
+- telemetria versionada com payload estruturado;
 - possibilidade de `skip` sem inferir automaticamente falta de competência;
 - sinalização de desafio muito fácil como autoavaliação, a ser confirmada por evidências posteriores;
 - em desafios difíceis, oferta de pistas, decomposição ou Learning Resources antes de troca, conforme escolha do participante;
 - pistas-base validadas com adaptação controlada por IA;
 - PROBE curto de recalibração quando solicitado pelo participante ou quando o Lab detectar má calibração persistente, sempre após o ticket corrente;
-- uma jornada ativa por vez;
+- uma jornada ativa por vez, mantendo histórico das jornadas anteriores;
 - conclusão baseada em evidências suficientes de evolução e transferência, não em quantidade fixa de tickets;
 - extensão adaptativa opcional para lacunas remanescentes;
 - perfil final qualitativo por competência, mostrando evolução entre entrada e saída sem expor obrigatoriamente scores internos;
 - recomendação da próxima jornada com base no perfil, pré-requisitos, lacunas e objetivo profissional;
+- `AIProvider` desacoplado, com implementação inicial baseada no SDK oficial da OpenAI e `base_url` configurável;
+- degradação graciosa quando a IA estiver desabilitada ou indisponível;
 - geração assistida por IA de desafios candidatos quando o catálogo não cobrir adequadamente a necessidade;
 - lifecycle mínimo de desafios gerados: `candidate -> validated -> trialed -> published`;
 - validações automáticas antes do primeiro uso; revisão humana obrigatória apenas quando o risco, subjetividade ou baixa confiança impedirem validação automática suficiente;
@@ -83,7 +113,7 @@ Entregas:
 
 A adaptação do MVP deve permanecer simples e auditável. O Learner Model mínimo não implica Skill Graph completo, Progression Agent autônomo ou inferência irrestrita por LLM.
 
-GitHub Actions pode ser utilizado para qualidade e CI do próprio produto, mas não é o mecanismo obrigatório de validação das soluções do participante. Da mesma forma, fork, branch e Pull Request não pertencem ao fluxo mínimo do aluno.
+GitHub Actions será utilizado para qualidade e CI do próprio produto, mas não é o mecanismo obrigatório de validação das soluções do participante. Da mesma forma, fork, branch e Pull Request não pertencem ao fluxo mínimo do aluno.
 
 Critério de saída:
 

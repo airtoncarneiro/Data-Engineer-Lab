@@ -6,7 +6,7 @@ O projeto simula uma empresa fictícia com dados, documentação, demandas conte
 
 ## Estado atual
 
-O projeto está na fase de definição e implementação do MVP SQL.
+O projeto está pronto para iniciar a implementação da fundação e do primeiro vertical slice do MVP SQL.
 
 A arquitetura aprovada para o MVP é local:
 
@@ -14,16 +14,37 @@ A arquitetura aprovada para o MVP é local:
 Browser
    │
    ▼
-Local Web UI
+FastAPI + Jinja2 + HTMX
    │
    ▼
-Lab Engine (Python)
+Application / Domain
    │
-   ├── PostgreSQL via Docker
-   └── persistência local da jornada
+   ├── PostgreSQL 16 via Docker
+   │   ├── schema lab
+   │   └── schema company
+   └── provider de IA compatível com OpenAI, quando habilitado
 ```
 
-O GitHub é utilizado para desenvolvimento, versionamento e distribuição do produto. Fork, Pull Request e GitHub Actions não fazem parte do fluxo operacional obrigatório do participante no MVP.
+A aplicação Python roda localmente via `uv`; no primeiro momento, somente o PostgreSQL é executado em Docker. A Web UI utiliza assets locais, incluindo CodeMirror para edição SQL, sem exigir Node.js ou build frontend.
+
+O GitHub é utilizado para desenvolvimento, versionamento, distribuição e CI do produto. Fork, Pull Request e GitHub Actions não fazem parte do fluxo operacional obrigatório do participante no MVP.
+
+## Stack mínima aprovada
+
+- Python 3.11;
+- FastAPI + Jinja2 + HTMX;
+- CodeMirror e CSS próprio servidos localmente pelo FastAPI;
+- PostgreSQL 16 via Docker Compose;
+- SQLAlchemy 2.x + psycopg 3;
+- Alembic para o schema `lab`;
+- scripts SQL versionados para criação e seed do schema `company`;
+- `uv` + `pyproject.toml`;
+- Pydantic + `pydantic-settings`;
+- pytest, Ruff e mypy;
+- SDK Python oficial da OpenAI por trás de um contrato `AIProvider`, com `base_url` configurável;
+- GitHub Actions para CI do próprio produto.
+
+Detalhes, fronteiras arquiteturais e convenções estão em [Arquitetura](docs/ARCHITECTURE.md).
 
 ## Experiência principal do MVP
 
