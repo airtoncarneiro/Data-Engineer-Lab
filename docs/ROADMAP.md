@@ -2,6 +2,13 @@
 
 O roadmap descreve hipóteses de evolução e é a fonte única para a evolução pós-MVP. Não representa compromisso com todas as funcionalidades.
 
+A progressão do laboratório deve considerar duas dimensões complementares:
+
+- **complexidade tecnológica**: SQL, modelagem, Python, Airflow, plataforma, cloud e operação;
+- **natureza do trabalho**: construir, modificar, corrigir, refatorar, otimizar, investigar e operar/troubleshooting.
+
+Essas dimensões podem ser combinadas ao longo das fases. A introdução de cenários brownfield não constitui uma fase isolada: é uma característica transversal dos tickets.
+
 ## Fase 0 — Fundação
 
 Objetivo: transformar o Discovery em um repositório executável.
@@ -14,6 +21,7 @@ Entregas:
 - estruturar documentação;
 - definir convenções de tickets;
 - definir schema mínimo para tickets estruturados;
+- incluir tipo de ticket como metadado do modelo;
 - criar Docker Compose;
 - criar PostgreSQL inicial;
 - definir mecanismo de reset do ambiente.
@@ -36,6 +44,7 @@ Entregas:
 - validação humana/editorial antes da publicação de tickets gerados;
 - estrutura mínima para registrar evidências objetivas das entregas;
 - feedback por IA sobre entregas quando viável, apoiado por resultados determinísticos;
+- possibilidade de incluir pontualmente tickets não greenfield quando agregarem valor ao MVP, sem exigir cobertura de toda a taxonomia;
 - teste com primeiros usuários.
 
 Critério de saída:
@@ -54,6 +63,8 @@ Possibilidades:
 - modelagem dimensional;
 - problemas de qualidade;
 - mudanças de regra de negócio;
+- tickets `bugfix`, `refactoring`, `performance` e `legacy` aplicados a SQL;
+- cenários brownfield com queries existentes cujo comportamento precisa ser compreendido e preservado;
 - variações de desafios geradas a partir de competências e dificuldade informadas.
 
 ## Fase 3 — Python e ETL/ELT
@@ -66,7 +77,9 @@ Possibilidades:
 - tratamento de erros;
 - logging;
 - testes;
-- incrementalidade.
+- incrementalidade;
+- manutenção e refatoração de pipelines existentes;
+- investigação de comportamento legado e dívida técnica plausível.
 
 ## Fase 4 — Orquestração
 
@@ -79,7 +92,9 @@ Introdução de Apache Airflow e problemas envolvendo:
 - parametrização;
 - falhas parciais;
 - observabilidade;
-- pipelines incrementais.
+- pipelines incrementais;
+- correção e evolução de DAGs existentes;
+- troubleshooting de fluxos herdados.
 
 ## Fase 5 — Plataforma de dados
 
@@ -96,7 +111,7 @@ Possibilidades:
 
 ## Fase 6 — Operação e incidentes
 
-Tickets deixam de ser apenas novas implementações e passam a incluir:
+A natureza do trabalho passa a enfatizar investigação e operação. Tickets podem incluir:
 
 - pipeline quebrado;
 - dados incorretos;
@@ -105,7 +120,9 @@ Tickets deixam de ser apenas novas implementações e passam a incluir:
 - duplicidade;
 - schema drift;
 - reprocessamento;
-- investigação de causa raiz.
+- investigação de causa raiz;
+- manutenção de componentes legados;
+- correções com necessidade explícita de preservar comportamento e evitar regressões.
 
 ## Fase 7 — IA avançada e adaptação
 
@@ -115,7 +132,7 @@ Possibilidades:
 
 - agente gerador de datasets;
 - agente de testes;
-- agente revisor;
+- AI Code Reviewer;
 - agente simulando stakeholder;
 - avaliação assistida por LLM para critérios subjetivos;
 - Skill Graph;
@@ -124,6 +141,21 @@ Possibilidades:
 - Progression Agent;
 - geração de variações individualizadas de tickets;
 - arquitetura multiagente.
+
+### AI Code Reviewer
+
+O AI Code Reviewer deve complementar, e não substituir, as validações determinísticas.
+
+Responsabilidades possíveis:
+
+- comentar legibilidade e manutenibilidade;
+- levantar edge cases não cobertos explicitamente;
+- questionar decisões técnicas e trade-offs;
+- apontar complexidade desnecessária;
+- estimular justificativa técnica do participante;
+- utilizar evidências produzidas pelo CI como contexto para o feedback.
+
+Critérios objetivos que possam ser testados devem continuar sendo validados por testes e verificações determinísticas. O revisor por IA não deve atuar como autoridade única de aprovação da entrega.
 
 A publicação totalmente autônoma de desafios deverá ser considerada apenas se houver mecanismos suficientes de validação, observabilidade e governança.
 
@@ -164,7 +196,7 @@ Skill Profile / Skill Graph
     Participante
           │
           ▼
-Validação determinística + IA
+Validação determinística + AI Code Review
           │
           ▼
       Evidências
