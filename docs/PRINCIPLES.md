@@ -1,85 +1,205 @@
-# Princípios do Projeto
+# Princípios do Data Engineer Lab
 
-Estes princípios orientam decisões de produto, conteúdo e arquitetura.
+## 1. Learning by doing
 
-## 1. Prática antes de ensino
+O aprendizado acontece principalmente pela resolução de problemas contextualizados, não pela exposição passiva a conteúdo.
 
-O simulador fornece contexto, problema, ambiente e feedback. Não pretende substituir cursos ou documentação técnica.
+O participante deve interpretar demandas, investigar dados, tomar decisões e construir soluções.
 
-## 2. Demandas, não exercícios
+## 2. Realismo profissional
 
-O participante recebe tickets representando necessidades de uma empresa fictícia. A tecnologia aparece como meio para resolver o problema.
+Os desafios devem se aproximar de situações encontradas no trabalho de Engenharia de Dados.
 
-## 3. Ambiente próximo do trabalho real
+Isso inclui:
 
-Sempre que o custo for razoável, utilizar práticas e ferramentas encontradas no cotidiano profissional: Git, Pull Requests, containers, banco de dados, testes e CI/CD.
+- requisitos incompletos ou distribuídos em artefatos diferentes;
+- regras de negócio;
+- dados imperfeitos;
+- restrições técnicas;
+- manutenção de soluções existentes;
+- investigação e troubleshooting;
+- necessidade de justificar decisões e trade-offs.
 
-Pesquisa, documentação e IA fazem parte das ferramentas disponíveis ao participante. O laboratório deve avaliar a entrega e a compreensão demonstrada, não tentar fiscalizar quais fontes foram utilizadas.
+Realismo não significa introduzir complexidade artificial. Cada elemento deve possuir função educacional ou representar uma restrição plausível do problema.
 
-## 4. Progressão baseada em desafio adequado
+## 3. Demanda antes da técnica
 
-A progressão deve considerar tanto a complexidade tecnológica quanto a natureza do trabalho executado: construir, modificar, corrigir, refatorar, otimizar, investigar e operar.
+Tickets devem descrever problemas e necessidades, não instruções sobre qual construção técnica usar.
 
-O participante deve receber desafios compatíveis com as competências já demonstradas, de forma que a jornada continue exigindo investigação, raciocínio e evolução independentemente do nível inicial.
+Evitar:
 
-A posição de um ticket na jornada não deve ser tratada como sinônimo de dificuldade absoluta. Participantes diferentes podem receber desafios distintos no mesmo estágio quando suas evidências de proficiência forem diferentes.
+> Use uma window function para obter o resultado.
 
-## 5. Evidência antes de classificação
+Preferir:
 
-A proficiência deve ser inferida prioritariamente a partir do desempenho demonstrado em problemas e das evidências produzidas pela avaliação.
+> O time precisa identificar, para cada cliente, a compra mais recente e o valor correspondente.
 
-Senioridade declarada, autoavaliação ou uma única resposta correta podem ser sinais auxiliares, mas não devem constituir prova suficiente de domínio. Sempre que viável, o simulador deve acumular múltiplas evidências e observar aplicação em contextos diferentes antes de considerar uma competência consolidada.
+A técnica necessária deve ser consequência do problema.
 
-Uma entrega tecnicamente correta e domínio da competência são conceitos distintos. Assistência direcionada pode reduzir a força da evidência sem invalidar a entrega.
+## 4. Progressão baseada em evidências
 
-## 6. Validar comportamento, não resposta textual
+O participante não progride apenas porque concluiu uma quantidade fixa de conteúdo.
 
-Sempre que possível, testar o resultado produzido pela solução em vez de exigir uma implementação idêntica à solução de referência.
+A progressão deve considerar evidências acumuladas sobre competências técnicas e profissionais, incluindo aplicação em contextos diferentes.
 
-## 7. Múltiplas soluções podem estar corretas
+Uma evidência isolada pode indicar desempenho pontual; múltiplas evidências aumentam a confiança sobre domínio e transferência.
 
-Problemas reais possuem trade-offs. O simulador deve aceitar alternativas tecnicamente válidas quando os critérios de aceite forem atendidos.
+## 5. Adaptação simples e auditável
 
-## 8. Contexto acumulativo
+O MVP deve adaptar a experiência sem depender de mecanismos opacos ou excessivamente sofisticados.
 
-A empresa fictícia deve possuir continuidade. Sistemas, tabelas, regras e decisões anteriores reaparecem em novos tickets.
+Regras determinísticas devem definir restrições, prioridades e pré-requisitos sempre que possível. IA pode complementar seleção, geração e feedback dentro desses limites.
 
-## 9. O participante é responsável pela investigação
+Skill Graph completo, Progression Agent autônomo e inferência irrestrita por LLM não são requisitos iniciais.
 
-Nem toda informação necessária precisa estar no enunciado. Documentação, schema, código e dados fazem parte da investigação.
+## 6. Avaliação determinística primeiro
 
-## 10. Orientar sem ensinar a solução
+Critérios objetivos devem ser verificados por mecanismos objetivos.
 
-O simulador não é um curso. Os desafios podem fornecer Learning Resources e referências técnicas para que o participante adquira ou revise o conhecimento necessário, mas esses materiais não devem revelar diretamente a solução da atividade.
+Para SQL, isso pode incluir:
 
-Os recursos devem priorizar conceitos reutilizáveis e fontes confiáveis, especialmente documentação oficial. O participante decide se precisa consultá-los.
+- execução sem erro;
+- resultado esperado;
+- regras de negócio;
+- presença ou ausência de registros;
+- estrutura exigida;
+- limites de performance quando aplicáveis.
 
-Quando houver dificuldade, o laboratório pode oferecer investigação guiada, pistas progressivas, decomposição e Learning Resources. A assistência deve favorecer autocorreção antes de revelar a solução.
+IA deve complementar a avaliação em aspectos como raciocínio, legibilidade, decisões, edge cases e trade-offs, sem substituir testes quando estes forem viáveis.
 
-## 11. Nem todo trabalho começa do zero
+## 7. Entrega técnica não é sinônimo de domínio
 
-O laboratório deve representar cenários greenfield e brownfield.
+Uma solução pode passar nas verificações técnicas e ainda produzir evidências insuficientes para afirmar domínio de determinada competência.
 
-Tickets podem exigir compreensão, correção, refatoração, otimização ou evolução de código e pipelines existentes, inclusive quando houver documentação incompleta, nomenclatura ruim, lógica confusa, testes insuficientes ou decisões legadas.
+O Lab deve separar:
 
-O objetivo não é produzir código ruim artificialmente, mas reproduzir situações plausíveis em que o participante precisa entender o estado atual antes de alterá-lo com segurança.
+- conclusão técnica do ticket;
+- evidências produzidas;
+- confiança no domínio das competências relacionadas.
 
-## 12. Feedback automatizado primeiro
+## 8. Autonomia do participante
 
-O projeto deve escalar sem depender de revisão humana para cada participante.
+Pesquisa, documentação e IA fazem parte do trabalho profissional e são permitidas.
 
-Quando houver revisão assistida por IA, ela deve complementar a validação determinística com feedback sobre legibilidade, manutenibilidade, trade-offs, edge cases, decisões técnicas e compreensão da solução. A IA não deve substituir testes objetivos quando o comportamento puder ser verificado deterministicamente.
+O produto não deve tentar impedir artificialmente o uso dessas ferramentas.
 
-## 13. Conteúdo é o principal ativo
+Assistência direcionada fornecida pelo próprio Lab — pistas, decomposição ou Learning Resources — pode ser registrada para ponderar a força da evidência, sem invalidar automaticamente a entrega.
 
-Infraestrutura deve permanecer simples sempre que possível. A qualidade da empresa simulada, dos dados, dos tickets e dos critérios de validação é mais importante que uma plataforma sofisticada.
+## 9. Dificuldade relativa ao participante
 
-## 14. MVP antes de plataforma
+Dificuldade não deve ser tratada apenas como propriedade fixa do ticket.
 
-Não construir portal, backend, ranking ou arquitetura distribuída antes de validar que a experiência básica gera valor.
+Um mesmo desafio pode ser trivial para um participante e exigente para outro. O Lab deve utilizar dificuldade estimada, pré-requisitos e Learner Model para selecionar problemas adequados ao estágio atual.
 
-## 15. IA aumenta escala, não reduz qualidade
+## 10. Greenfield e brownfield
 
-Agentes poderão apoiar geração, adaptação e revisão de conteúdo. Desafios reutilizáveis precisam ser coerentes, reproduzíveis e tecnicamente verificáveis.
+O trabalho real inclui construir soluções novas e modificar sistemas existentes.
 
-Conteúdo gerado por IA deve ser tratado inicialmente como candidato. Sua promoção ao catálogo deve depender de validações compatíveis com o risco e de evidências de uso real, sem exigir revisão humana quando critérios objetivos e mecanismos automáticos forem suficientes.
+O laboratório deve incluir progressivamente:
+
+- implementação nova;
+- correção de bugs;
+- refatoração;
+- otimização;
+- investigação;
+- manutenção de código ou SQL legado;
+- incidentes e recuperação operacional.
+
+Brownfield deve exercitar compreensão e manutenção segura, não expor código artificialmente ruim apenas para aumentar dificuldade.
+
+## 11. Persistência e continuidade
+
+O participante deve poder interromper e retomar uma jornada sem perder seu estado.
+
+No MVP, persistência local é suficiente para:
+
+- jornada ativa;
+- objetivo profissional;
+- Learner Model;
+- evidências;
+- telemetria necessária.
+
+Centralização, contas e sincronização remota são evoluções posteriores.
+
+## 12. Web UI como interface; Lab Engine como núcleo
+
+No MVP, a Web UI local é a interface principal do participante.
+
+A lógica de jornada, avaliação, progressão e evidências pertence ao Lab Engine e não deve ficar acoplada à camada visual.
+
+Essa separação deve existir em código e contratos internos mesmo sem uma API de rede independente.
+
+## 13. Local primeiro
+
+O MVP deve validar o valor educacional e o ciclo adaptativo em ambiente local antes de introduzir infraestrutura de plataforma.
+
+A solução inicial deve priorizar:
+
+- execução reproduzível;
+- baixo custo operacional;
+- simplicidade de instalação e diagnóstico;
+- independência de serviços externos para validações determinísticas básicas;
+- capacidade de evoluir posteriormente sem exigir arquitetura distribuída desde o início.
+
+Autenticação, backend centralizado, execução remota, multiusuário e monetização somente devem ser introduzidos quando houver necessidade comprovada.
+
+## 14. GitHub é infraestrutura de desenvolvimento, não requisito pedagógico
+
+O GitHub é a fonte de verdade do código e documentação do produto e pode hospedar CI do próprio projeto.
+
+Fork, branch por ticket, Pull Request e GitHub Actions não fazem parte do fluxo operacional obrigatório do participante no MVP.
+
+O aluno deve poder executar uma jornada, resolver desafios e receber validação pela aplicação local sem depender de operações Git.
+
+## 15. Catálogo evolutivo e geração controlada
+
+O catálogo deve crescer conforme necessidades reais de cobertura de competências e faixas de proficiência.
+
+Quando não houver desafio adequado, IA pode gerar um candidato dentro de um contrato estruturado.
+
+Gerado não significa publicado. O lifecycle mínimo é:
+
+`candidate -> validated -> trialed -> published`
+
+Validação automática deve anteceder o primeiro uso. Revisão humana é necessária quando risco, subjetividade ou baixa confiança impedirem qualificação automática suficiente.
+
+## 16. Learning Resources não são soluções
+
+Learning Resources devem ensinar conceitos necessários sem entregar diretamente a solução de um ticket.
+
+Devem ser:
+
+- opcionais;
+- objetivos;
+- reutilizáveis;
+- preferencialmente autocontidos;
+- organizados por domínio ou conceito;
+- independentes da implementação específica do desafio.
+
+## 17. Simplicidade antes de sofisticação
+
+Componentes devem ser introduzidos quando resolvem uma necessidade concreta do estágio atual.
+
+Evitar antecipar:
+
+- microserviços;
+- múltiplos bancos sem necessidade;
+- API remota apenas por abstração arquitetural;
+- agentes autônomos complexos;
+- infraestrutura cloud;
+- sistemas avançados de proteção de testes;
+- mecanismos de gamificação sem evidência de valor.
+
+## 18. Vertical slice antes de amplitude
+
+A primeira implementação deve provar o ciclo principal ponta a ponta:
+
+`objetivo -> PROBE -> Learner Model -> ticket -> solução -> validação -> evidência -> atualização -> próximo ticket`
+
+Somente depois desse fluxo funcionar de forma reproduzível deve haver expansão significativa do catálogo ou aumento da sofisticação adaptativa.
+
+## 19. Evolução incremental
+
+Cada fase deve produzir algo utilizável e avaliável.
+
+O produto deve evoluir a partir de feedback de participantes reais, evitando construir uma plataforma ampla antes de comprovar que o núcleo da experiência entrega valor.
