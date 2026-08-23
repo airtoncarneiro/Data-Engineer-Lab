@@ -20,7 +20,7 @@ Essa lacuna é especialmente relevante para quem busca a primeira oportunidade p
 
 ## 3. Hipótese
 
-Se disponibilizarmos uma empresa fictícia com ambiente técnico reproduzível, dados, documentação e demandas contextualizadas, permitindo que o participante resolva problemas e receba feedback automatizado, então ele poderá desenvolver experiência prática mais próxima do cotidiano profissional.
+Se disponibilizarmos uma empresa fictícia com ambiente técnico reproduzível, dados, documentação e demandas contextualizadas, permitindo que o participante resolva problemas, receba feedback automatizado e seja desafiado de acordo com as competências que demonstra, então ele poderá desenvolver experiência prática mais próxima do cotidiano profissional.
 
 ## 4. Público inicial
 
@@ -29,7 +29,8 @@ Principalmente:
 - estudantes de Engenharia de Dados;
 - profissionais migrando para a área;
 - pessoas buscando a primeira oportunidade;
-- profissionais que conhecem determinada tecnologia, mas ainda não a utilizaram em projetos próximos do mundo real.
+- profissionais que conhecem determinada tecnologia, mas ainda não a utilizaram em projetos próximos do mundo real;
+- profissionais experientes que desejam praticar ou aprofundar competências específicas sem percorrer obrigatoriamente desafios introdutórios.
 
 ## 5. O que estamos construindo
 
@@ -38,6 +39,8 @@ Um **simulador de trabalho de Engenharia de Dados**, baseado inicialmente em Git
 O repositório representa uma empresa fictícia e contém seu ambiente, sistemas, dados, documentação e desafios.
 
 Cada desafio representa uma demanda da empresa e é apresentado como um **ticket**.
+
+A jornada do participante não precisa seguir uma sequência fixa de dificuldade. O laboratório deve selecionar desafios adequados à proficiência demonstrada, de forma que participantes com níveis iniciais diferentes continuem sendo desafiados desde o início.
 
 ## 6. Ticket como unidade de trabalho
 
@@ -62,6 +65,9 @@ Cada ticket poderá conter:
 - restrições conhecidas;
 - artefatos relacionados;
 - dependências, quando existirem;
+- competências ou conceitos-alvo;
+- dificuldade estimada;
+- pré-requisitos, quando aplicável;
 - Learning Resources relacionados, quando aplicável.
 
 ### 6.1 Tipos de ticket
@@ -148,9 +154,19 @@ Executa um ticket inicial para:
 - conectar-se ao banco;
 - executar verificações básicas.
 
+### Diagnóstico inicial
+
+Antes da jornada principal, o laboratório obtém evidências suficientes para estimar as competências relevantes do participante.
+
+O diagnóstico deve ser curto e discriminativo: aumentar rapidamente a dificuldade quando houver domínio aparente e investigar pré-requisitos quando surgirem lacunas. Senioridade declarada e autoavaliação podem ser usadas como sinais auxiliares, mas não substituem evidências de desempenho.
+
+No MVP, esse diagnóstico pode ser simples e não exige um modelo sofisticado de Skill Graph.
+
 ### Trabalho
 
-Seleciona um ticket disponível e cria sua implementação.
+O laboratório seleciona um desafio compatível com as competências já demonstradas e com as evidências ainda necessárias. O participante cria sua implementação.
+
+Participantes diferentes podem receber desafios distintos no mesmo estágio da jornada. "Ticket 1" significa o primeiro desafio daquele participante, não necessariamente o ticket mais fácil do catálogo.
 
 ### Entrega
 
@@ -164,9 +180,21 @@ Quando aplicável, a validação poderá combinar evidências determinísticas c
 
 A revisão por IA deve complementar o CI com perguntas e observações sobre decisões técnicas, legibilidade, manutenibilidade, possíveis edge cases e trade-offs. Critérios objetivos continuam sendo responsabilidade prioritária das validações determinísticas.
 
+### Evidências e adaptação
+
+O resultado da validação produz evidências relacionadas às competências exercitadas pelo desafio. Essas evidências alimentam a seleção do próximo ticket.
+
+Uma resposta correta isolada não deve ser tratada automaticamente como domínio. Sempre que viável, competências importantes devem ser demonstradas mais de uma vez e em contextos diferentes.
+
+A adaptação do MVP deve ser simples e auditável, utilizando metadados dos tickets, diagnóstico inicial, pré-requisitos e evidências acumuladas. Inferência contínua por LLM, Skill Graph sofisticado e Progression Agent autônomo permanecem evoluções pós-MVP.
+
 ### Evolução
 
-Após concluir tickets iniciais, o participante recebe problemas progressivamente mais complexos e envolvendo novas tecnologias. A evolução pós-MVP é tratada como hipótese no [ROADMAP](ROADMAP.md), sem ampliar o escopo definido para o MVP.
+A jornada SQL inicial é composta por aproximadamente 10 desafios selecionados adaptativamente conforme a proficiência demonstrada. O número representa o tamanho esperado da experiência individual, não a quantidade total de tickets disponíveis no catálogo.
+
+Concluir a jornada não significa automaticamente dominar todas as competências avaliadas. O histórico de evidências deve permitir identificar competências demonstradas, parciais e lacunas.
+
+A evolução pós-MVP é tratada como hipótese no [ROADMAP](ROADMAP.md).
 
 ## 8. Modelo Git
 
@@ -194,7 +222,7 @@ Alterações devem minimizar conflitos com áreas destinadas às soluções dos 
 
 ## 9. Progressão
 
-A progressão deve considerar duas dimensões complementares.
+A progressão deve considerar três dimensões complementares.
 
 ### 9.1 Complexidade tecnológica
 
@@ -225,7 +253,20 @@ O participante também deve evoluir no tipo de problema enfrentado, por exemplo:
 
 Essas dimensões podem ser combinadas. Um ticket pode ser, por exemplo, `SQL + feature`, `SQL + legacy`, `Python + refactoring` ou `Airflow + incident`.
 
-Essa sequência é indicativa. A evolução pós-MVP, incluindo hipóteses de adaptação e novas trilhas, está registrada no [ROADMAP](ROADMAP.md).
+### 9.3 Proficiência demonstrada
+
+A dificuldade adequada é relativa às competências que o participante já demonstrou, e não apenas à ordem de uma lista de tickets.
+
+A progressão deve:
+
+- evitar obrigar participantes experientes a percorrer desafios claramente introdutórios;
+- evitar avançar participantes apenas porque um conteúdo foi apresentado ou um único ticket foi concluído;
+- utilizar evidências produzidas pelas soluções e validações;
+- considerar pré-requisitos e lacunas identificadas;
+- revisitar competências quando as evidências forem insuficientes ou contraditórias;
+- quando viável, verificar retenção e transferência em problemas diferentes que dependam dos mesmos princípios.
+
+O MVP pode representar proficiência de forma simples, sem depender de senioridade profissional ou de um Skill Graph completo. Modelos mais ricos de mastery, confidence, histórico e diversidade de evidências são possibilidades pós-MVP registradas no [ROADMAP](ROADMAP.md).
 
 ## 10. Validação automática
 
@@ -249,11 +290,12 @@ A avaliação poderá evoluir para um modelo híbrido:
 
 1. testes e verificações determinísticas produzem evidências objetivas;
 2. IA analisa essas evidências e, quando necessário, aspectos menos determinísticos;
-3. o participante recebe feedback técnico contextualizado.
+3. o participante recebe feedback técnico contextualizado;
+4. evidências relevantes são associadas às competências exercitadas e podem influenciar a seleção dos próximos desafios.
 
 O LLM não deve ser a única autoridade para critérios objetivos que possam ser verificados deterministicamente.
 
-O histórico de evidências de competência pode começar de forma simples no MVP, sem exigir um modelo sofisticado de Skill Graph.
+O histórico de evidências de competência deve começar de forma simples no MVP, sem exigir um modelo sofisticado de Skill Graph.
 
 ## 11. Gamificação
 
@@ -269,13 +311,15 @@ No MVP, o uso prioritário é:
 - apoiar a criação de critérios de aceite e entregáveis;
 - apoiar feedback técnico sobre entregas, preferencialmente baseado em evidências produzidas por validações determinísticas.
 
+A seleção adaptativa simples do MVP não precisa depender de IA. Quando regras, metadados e evidências determinísticas forem suficientes, devem ser preferidos por serem mais previsíveis e auditáveis.
+
 Possibilidades adicionais de IA, adaptação e automação são hipóteses pós-MVP mantidas no [ROADMAP](ROADMAP.md). Conteúdo gerado por IA deverá passar por validação antes de se tornar parte oficial do simulador.
 
 ## 13. MVP
 
 ### Objetivo
 
-Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" produz uma experiência útil de prática, incluindo a viabilidade da geração assistida de tickets por IA sem comprometer a qualidade pedagógica.
+Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" produz uma experiência útil de prática para participantes com níveis iniciais distintos, incluindo seleção simples de desafios baseada em evidências e geração assistida de tickets por IA sem comprometer a qualidade pedagógica.
 
 ### Escopo
 
@@ -285,15 +329,18 @@ Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" pr
 - base populada;
 - documentação mínima da empresa;
 - ticket 000 de onboarding;
-- aproximadamente 10 tickets SQL;
-- progressão de dificuldade;
+- diagnóstico inicial simples e discriminativo;
+- catálogo de tickets SQL suficiente para compor jornadas distintas;
+- jornada individual de aproximadamente 10 desafios SQL selecionados adaptativamente conforme a proficiência demonstrada;
+- metadados mínimos de competências, dificuldade e pré-requisitos nos tickets;
 - estrutura para soluções;
 - Pull Request no fork;
 - GitHub Actions;
 - testes automáticos;
 - Learning Resources relacionados aos tickets, quando aplicável;
 - geração assistida de propostas de tickets por IA;
-- estrutura mínima para registrar evidências produzidas pela avaliação;
+- estrutura mínima para registrar evidências produzidas pela avaliação e relacioná-las às competências exercitadas;
+- seleção simples e auditável do próximo desafio a partir de diagnóstico, metadados e evidências;
 - avaliação híbrida entre verificações determinísticas e feedback por IA quando viável.
 
 A taxonomia de tickets e a possibilidade de cenários brownfield fazem parte do modelo do produto, mas não exigem que todos os tipos estejam representados no conjunto inicial do MVP.
@@ -308,8 +355,10 @@ A taxonomia de tickets e a possibilidade de cenários brownfield fazem parte do 
 - infraestrutura cloud obrigatória;
 - publicação totalmente autônoma de tickets por agentes;
 - Skill Graph sofisticado;
-- inferência automática contínua de nível;
+- Learner Model avançado com inferência contínua de mastery/confidence;
+- inferência automática contínua de nível por LLM;
 - Progression Agent decidindo autonomamente a próxima competência;
+- geração dinâmica individualizada de todos os desafios;
 - Airflow e demais trilhas.
 
 ## 14. Questões em aberto
@@ -320,9 +369,14 @@ As seguintes decisões serão tratadas durante o detalhamento:
 - formato dos arquivos de solução;
 - como impedir exposição trivial dos testes esperados;
 - estratégia para atualização do fork sem sobrescrever soluções;
-- critérios de progressão entre tickets;
+- formato e critérios do diagnóstico inicial;
+- modelo mínimo de proficiência utilizado no MVP;
+- algoritmo/regra de seleção do próximo desafio;
+- quantidade e cobertura necessárias do catálogo para suportar jornadas distintas de aproximadamente 10 desafios;
+- critérios para considerar evidências suficientes sobre uma competência;
+- estratégia de retenção e transferência aplicável ao MVP ou fases posteriores;
 - possibilidade de dependências entre tickets;
-- schema final para representar tipo de ticket e demais metadados;
+- schema final para representar tipo de ticket, competências, dificuldade, pré-requisitos e demais metadados;
 - quais tipos de ticket estarão presentes no MVP SQL;
 - estrutura e localização dos Learning Resources no repositório;
 - política para uso de LLMs pelos participantes;

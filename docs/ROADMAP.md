@@ -2,10 +2,11 @@
 
 O roadmap descreve hipóteses de evolução e é a fonte única para a evolução pós-MVP. Não representa compromisso com todas as funcionalidades.
 
-A progressão do laboratório deve considerar duas dimensões complementares:
+A progressão do laboratório deve considerar três dimensões complementares:
 
 - **complexidade tecnológica**: SQL, modelagem, Python, Airflow, plataforma, cloud e operação;
-- **natureza do trabalho**: construir, modificar, corrigir, refatorar, otimizar, investigar e operar/troubleshooting.
+- **natureza do trabalho**: construir, modificar, corrigir, refatorar, otimizar, investigar e operar/troubleshooting;
+- **proficiência demonstrada**: evidências acumuladas sobre as competências do participante para selecionar desafios adequados ao seu estágio atual.
 
 Essas dimensões podem ser combinadas ao longo das fases. A introdução de cenários brownfield não constitui uma fase isolada: é uma característica transversal dos tickets.
 
@@ -22,19 +23,22 @@ Entregas:
 - definir convenções de tickets;
 - definir schema mínimo para tickets estruturados;
 - incluir tipo de ticket como metadado do modelo;
+- incluir competências-alvo, dificuldade estimada e pré-requisitos mínimos no modelo de ticket;
 - criar Docker Compose;
 - criar PostgreSQL inicial;
 - definir mecanismo de reset do ambiente.
 
 ## Fase 1 — MVP SQL
 
-Objetivo: validar a experiência principal e a geração assistida de desafios.
+Objetivo: validar a experiência principal, a seleção adaptativa simples de desafios e a geração assistida de tickets.
 
 Entregas:
 
 - ticket 000 de onboarding;
-- aproximadamente 10 tickets SQL;
-- progressão de dificuldade;
+- catálogo SQL suficiente para compor jornadas distintas;
+- jornada individual de aproximadamente 10 desafios SQL selecionados conforme diagnóstico inicial e evidências de proficiência;
+- diagnóstico inicial simples e discriminativo, sem depender apenas de senioridade declarada;
+- progressão baseada em competências demonstradas, sem exigir Skill Graph sofisticado;
 - área padronizada para soluções;
 - Pull Request template;
 - testes automáticos;
@@ -42,14 +46,16 @@ Entregas:
 - documentação para fork e sincronização com upstream;
 - gerador assistido por IA para propostas estruturadas de tickets;
 - validação humana/editorial antes da publicação de tickets gerados;
-- estrutura mínima para registrar evidências objetivas das entregas;
+- estrutura mínima para registrar evidências objetivas das entregas por competência;
 - feedback por IA sobre entregas quando viável, apoiado por resultados determinísticos;
 - possibilidade de incluir pontualmente tickets não greenfield quando agregarem valor ao MVP, sem exigir cobertura de toda a taxonomia;
 - teste com primeiros usuários.
 
+A adaptação do MVP deve permanecer simples e auditável. A seleção do próximo desafio pode utilizar metadados dos tickets, pré-requisitos, diagnóstico inicial e evidências acumuladas, sem depender de inferência contínua por LLM ou de um Progression Agent autônomo.
+
 Critério de saída:
 
-Participantes externos conseguem executar onboarding, resolver tickets e interpretar feedback do CI sem intervenção constante do mantenedor. O projeto também consegue gerar propostas de tickets por IA que respeitam as convenções pedagógicas e técnicas antes de revisão/publicação.
+Participantes externos com níveis iniciais distintos conseguem executar onboarding, receber desafios adequados às competências demonstradas, resolver aproximadamente 10 desafios e interpretar feedback do CI sem intervenção constante do mantenedor. O projeto também consegue gerar propostas de tickets por IA que respeitam as convenções pedagógicas e técnicas antes de revisão/publicação.
 
 ## Fase 2 — SQL avançado e modelagem
 
@@ -65,7 +71,9 @@ Possibilidades:
 - mudanças de regra de negócio;
 - tickets `bugfix`, `refactoring`, `performance` e `legacy` aplicados a SQL;
 - cenários brownfield com queries existentes cujo comportamento precisa ser compreendido e preservado;
-- variações de desafios geradas a partir de competências e dificuldade informadas.
+- expansão do catálogo para melhorar cobertura de competências e faixas de proficiência;
+- variações de desafios geradas a partir de competências e dificuldade informadas;
+- desafios de transferência que exercitem princípios já demonstrados em contextos diferentes.
 
 ## Fase 3 — Python e ETL/ELT
 
@@ -126,19 +134,23 @@ A natureza do trabalho passa a enfatizar investigação e operação. Tickets po
 
 ## Fase 7 — IA avançada e adaptação
 
-Objetivo: evoluir da geração assistida do MVP para personalização e automação baseadas em evidências.
+Objetivo: evoluir da seleção adaptativa simples e da geração assistida do MVP para personalização e automação baseadas em evidências mais ricas.
 
 Possibilidades:
 
+- Learner Model persistente por competência;
+- mastery, confidence, misconceptions, quantidade e diversidade de evidências;
 - agente gerador de datasets;
 - agente de testes;
 - AI Code Reviewer;
 - agente simulando stakeholder;
 - avaliação assistida por LLM para critérios subjetivos;
 - Skill Graph;
-- inferência de competências a partir do histórico;
+- inferência contínua de competências a partir do histórico;
 - seleção adaptativa da próxima competência;
 - Progression Agent;
+- revisão espaçada e testes de retenção;
+- testes de transferência entre contextos diferentes;
 - geração de variações individualizadas de tickets;
 - arquitetura multiagente.
 

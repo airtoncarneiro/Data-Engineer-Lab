@@ -14,35 +14,43 @@ O participante recebe tickets representando necessidades de uma empresa fictíci
 
 Sempre que o custo for razoável, utilizar práticas e ferramentas encontradas no cotidiano profissional: Git, Pull Requests, containers, banco de dados, testes e CI/CD.
 
-## 4. Progressão de complexidade
-
-Os primeiros tickets devem permitir adaptação ao ambiente. Os seguintes aumentam gradualmente ambiguidade, volume, dependências e responsabilidade técnica.
+## 4. Progressão baseada em desafio adequado
 
 A progressão deve considerar tanto a complexidade tecnológica quanto a natureza do trabalho executado: construir, modificar, corrigir, refatorar, otimizar, investigar e operar.
 
-## 5. Validar comportamento, não resposta textual
+O participante deve receber desafios compatíveis com as competências já demonstradas, de forma que a jornada continue exigindo investigação, raciocínio e evolução independentemente do nível inicial.
+
+A posição de um ticket na jornada não deve ser tratada como sinônimo de dificuldade absoluta. Participantes diferentes podem receber desafios distintos no mesmo estágio quando suas evidências de proficiência forem diferentes.
+
+## 5. Evidência antes de classificação
+
+A proficiência deve ser inferida prioritariamente a partir do desempenho demonstrado em problemas e das evidências produzidas pela avaliação.
+
+Senioridade declarada, autoavaliação ou uma única resposta correta podem ser sinais auxiliares, mas não devem constituir prova suficiente de domínio. Sempre que viável, o simulador deve acumular evidências em contextos diferentes antes de considerar uma competência consolidada.
+
+## 6. Validar comportamento, não resposta textual
 
 Sempre que possível, testar o resultado produzido pela solução em vez de exigir uma implementação idêntica à solução de referência.
 
-## 6. Múltiplas soluções podem estar corretas
+## 7. Múltiplas soluções podem estar corretas
 
 Problemas reais possuem trade-offs. O simulador deve aceitar alternativas tecnicamente válidas quando os critérios de aceite forem atendidos.
 
-## 7. Contexto acumulativo
+## 8. Contexto acumulativo
 
 A empresa fictícia deve possuir continuidade. Sistemas, tabelas, regras e decisões anteriores reaparecem em novos tickets.
 
-## 8. O participante é responsável pela investigação
+## 9. O participante é responsável pela investigação
 
 Nem toda informação necessária precisa estar no enunciado. Documentação, schema, código e dados fazem parte da investigação.
 
-## 9. Orientar sem ensinar a solução
+## 10. Orientar sem ensinar a solução
 
 O simulador não é um curso. Os desafios podem fornecer Learning Resources e referências técnicas para que o participante adquira ou revise o conhecimento necessário, mas esses materiais não devem revelar diretamente a solução da atividade.
 
 Os recursos devem priorizar conceitos reutilizáveis e fontes confiáveis, especialmente documentação oficial. O participante decide se precisa consultá-los.
 
-## 10. Nem todo trabalho começa do zero
+## 11. Nem todo trabalho começa do zero
 
 O laboratório deve representar cenários greenfield e brownfield.
 
@@ -50,20 +58,20 @@ Tickets podem exigir compreensão, correção, refatoração, otimização ou ev
 
 O objetivo não é produzir código ruim artificialmente, mas reproduzir situações plausíveis em que o participante precisa entender o estado atual antes de alterá-lo com segurança.
 
-## 11. Feedback automatizado primeiro
+## 12. Feedback automatizado primeiro
 
 O projeto deve escalar sem depender de revisão humana para cada participante.
 
 Quando houver revisão assistida por IA, ela deve complementar a validação determinística com feedback sobre legibilidade, manutenibilidade, trade-offs, edge cases e decisões técnicas. A IA não deve substituir testes objetivos quando o comportamento puder ser verificado deterministicamente.
 
-## 12. Conteúdo é o principal ativo
+## 13. Conteúdo é o principal ativo
 
 Infraestrutura deve permanecer simples sempre que possível. A qualidade da empresa simulada, dos dados, dos tickets e dos critérios de validação é mais importante que uma plataforma sofisticada.
 
-## 13. MVP antes de plataforma
+## 14. MVP antes de plataforma
 
 Não construir portal, backend, ranking ou arquitetura distribuída antes de validar que a experiência básica gera valor.
 
-## 14. IA aumenta escala, não reduz qualidade
+## 15. IA aumenta escala, não reduz qualidade
 
 Agentes poderão apoiar geração e revisão de conteúdo, mas desafios oficiais precisam ser coerentes, reproduzíveis e tecnicamente verificáveis.
