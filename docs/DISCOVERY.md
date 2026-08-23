@@ -64,7 +64,40 @@ Cada ticket poderá conter:
 - dependências, quando existirem;
 - Learning Resources relacionados, quando aplicável.
 
-### 6.1 Learning Resources e material de apoio
+### 6.1 Tipos de ticket
+
+Os tickets podem representar diferentes naturezas de trabalho. Tipo de ticket e dificuldade são dimensões independentes: um `bugfix`, por exemplo, pode ser introdutório ou avançado.
+
+Taxonomia inicial:
+
+- `feature`: construir uma nova capacidade, transformação ou entrega;
+- `bugfix`: corrigir comportamento incorreto;
+- `refactoring`: melhorar uma implementação preservando seu comportamento esperado;
+- `performance`: investigar e melhorar desempenho;
+- `legacy`: compreender e modificar uma solução herdada ou pouco conhecida;
+- `incident`: investigar e recuperar uma falha operacional ou degradação de serviço.
+
+A taxonomia poderá evoluir conforme novos cenários sejam introduzidos, evitando criar tipos sem benefício educacional claro.
+
+### 6.2 Cenários greenfield e brownfield
+
+O simulador deve representar tanto trabalho greenfield quanto brownfield.
+
+Em cenários greenfield, o participante constrói uma solução nova a partir de uma demanda.
+
+Em cenários brownfield, parte da solução já existe e precisa ser compreendida antes de qualquer alteração. O participante pode receber código, SQL, pipeline, configuração, testes ou documentação existentes, incluindo situações plausíveis como:
+
+- documentação parcial ou desatualizada;
+- nomes pouco claros;
+- lógica complexa ou acoplada;
+- testes insuficientes;
+- regras de negócio implícitas;
+- gargalos de performance;
+- comportamento correto que precisa ser preservado durante a mudança.
+
+Esses cenários devem treinar leitura, investigação, manutenção segura e tomada de decisão, não apenas exposição artificial a código propositalmente ruim.
+
+### 6.3 Learning Resources e material de apoio
 
 Os tickets podem indicar materiais de apoio para permitir que o participante adquira ou revise conceitos necessários para resolver a demanda sem transformar o simulador em um curso.
 
@@ -82,7 +115,7 @@ Exemplo: se uma demanda exige conhecimento de PostgreSQL Window Functions, o tic
 
 A intenção é reproduzir um comportamento profissional: diante de uma demanda que exige conhecimento ainda não dominado, o participante identifica a lacuna, consulta documentação ou material técnico e aplica o conhecimento ao problema.
 
-### 6.2 Geração de tickets por IA
+### 6.4 Geração de tickets por IA
 
 A geração assistida de tickets por IA faz parte da direção do MVP.
 
@@ -129,6 +162,8 @@ GitHub Actions executa testes automatizados e informa se os critérios verificá
 
 Quando aplicável, a validação poderá combinar evidências determinísticas com análise assistida por IA para produzir feedback técnico mais contextualizado.
 
+A revisão por IA deve complementar o CI com perguntas e observações sobre decisões técnicas, legibilidade, manutenibilidade, possíveis edge cases e trade-offs. Critérios objetivos continuam sendo responsabilidade prioritária das validações determinísticas.
+
 ### Evolução
 
 Após concluir tickets iniciais, o participante recebe problemas progressivamente mais complexos e envolvendo novas tecnologias. A evolução pós-MVP é tratada como hipótese no [ROADMAP](ROADMAP.md), sem ampliar o escopo definido para o MVP.
@@ -159,7 +194,9 @@ Alterações devem minimizar conflitos com áreas destinadas às soluções dos 
 
 ## 9. Progressão
 
-O projeto deverá evoluir em camadas de complexidade.
+A progressão deve considerar duas dimensões complementares.
+
+### 9.1 Complexidade tecnológica
 
 Possível sequência:
 
@@ -173,6 +210,20 @@ Possível sequência:
 8. Data Lake/Lakehouse;
 9. cloud e infraestrutura;
 10. incidentes, otimização e arquitetura.
+
+### 9.2 Natureza do trabalho
+
+O participante também deve evoluir no tipo de problema enfrentado, por exemplo:
+
+1. construir;
+2. modificar;
+3. corrigir;
+4. refatorar;
+5. otimizar;
+6. investigar;
+7. operar e realizar troubleshooting.
+
+Essas dimensões podem ser combinadas. Um ticket pode ser, por exemplo, `SQL + feature`, `SQL + legacy`, `Python + refactoring` ou `Airflow + incident`.
 
 Essa sequência é indicativa. A evolução pós-MVP, incluindo hipóteses de adaptação e novas trilhas, está registrada no [ROADMAP](ROADMAP.md).
 
@@ -245,6 +296,8 @@ Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" pr
 - estrutura mínima para registrar evidências produzidas pela avaliação;
 - avaliação híbrida entre verificações determinísticas e feedback por IA quando viável.
 
+A taxonomia de tickets e a possibilidade de cenários brownfield fazem parte do modelo do produto, mas não exigem que todos os tipos estejam representados no conjunto inicial do MVP.
+
 ### Fora do MVP
 
 - backend próprio;
@@ -269,11 +322,14 @@ As seguintes decisões serão tratadas durante o detalhamento:
 - estratégia para atualização do fork sem sobrescrever soluções;
 - critérios de progressão entre tickets;
 - possibilidade de dependências entre tickets;
+- schema final para representar tipo de ticket e demais metadados;
+- quais tipos de ticket estarão presentes no MVP SQL;
 - estrutura e localização dos Learning Resources no repositório;
 - política para uso de LLMs pelos participantes;
 - contrato/schema de entrada e saída do gerador de tickets;
 - processo de revisão e aprovação de tickets gerados por IA;
 - formato mínimo para armazenar evidências de competência;
+- critérios e limites do feedback produzido pelo AI Code Reviewer;
 - modelo futuro de pontuação;
 - identidade e domínio da empresa fictícia;
 - licença do projeto.
