@@ -161,9 +161,12 @@ O participante pode utilizar documentação, pesquisa e IA livremente.
 
 Pode também:
 
-- pular um ticket; o `skip` é informação operacional e não evidência automática de falta de competência;
+- pular um ticket; o `skip` é registrado como telemetria operacional e não constitui evidência automática positiva ou negativa de competência;
+- ao pular, receber outro desafio compatível, preferencialmente relacionado à mesma lacuna ou a uma competência próxima;
 - sinalizar que um desafio está muito fácil; isso é autoavaliação e precisa ser confirmada por desempenho posterior;
 - sinalizar dificuldade excessiva e escolher receber pista, Learning Resource ou decomposição antes de trocar de desafio.
+
+Skips recorrentes podem provocar recalibração, pedido opcional de contexto ou ajuste da dificuldade e da seleção de desafios. A quantidade de skips, isoladamente, não reprova nem confirma falta de competência.
 
 ### Entrega e validação
 
@@ -191,7 +194,9 @@ A jornada SQL possui aproximadamente 10 desafios como referência de duração, 
 
 A evolução é medida tanto pela mudança nas competências demonstradas quanto pela capacidade de aplicá-las em problemas progressivamente mais exigentes e em contextos diferentes.
 
-A jornada é considerada concluída quando houver evidências suficientes de evolução nas competências-alvo e transferência. Lacunas remanescentes permanecem explícitas e podem originar uma extensão adaptativa opcional.
+A jornada é considerada concluída quando houver evidências suficientes de evolução nas competências-alvo e transferência. Se a janela inicial terminar antes disso, as lacunas permanecem explícitas e uma extensão adaptativa pode ser recomendada com desafios direcionados, sem reiniciar automaticamente toda a jornada.
+
+A extensão pode reforçar uma competência insuficiente em outro contexto, investigar uma lacuna de pré-requisito ou confirmar uma evidência ainda fraca. A próxima jornada é recomendada como avanço quando seus pré-requisitos forem compatíveis com o perfil final; a conclusão da janela inicial, por si só, não implica proficiência nem avanço automático.
 
 Ao final, o participante recebe um perfil qualitativo por competência, mostrando evolução entre entrada e saída sem reduzir tudo a um único nível. Detalhes de competências e evidências podem ser consultados sob demanda.
 
