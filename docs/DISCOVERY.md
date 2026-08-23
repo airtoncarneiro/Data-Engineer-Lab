@@ -28,9 +28,13 @@ Principalmente:
 
 ## 5. O que estamos construindo
 
-Um **simulador de trabalho de Engenharia de Dados**, baseado inicialmente em GitHub e containers locais.
+Um **simulador de trabalho de Engenharia de Dados**, executado inicialmente como aplicação local.
 
-O repositório representa uma empresa fictícia e contém seu ambiente, sistemas, dados, documentação e desafios. Cada desafio representa uma demanda da empresa e é apresentado como um **ticket**.
+A aplicação representa uma empresa fictícia e disponibiliza seu ambiente, sistemas, dados, documentação e desafios. Cada desafio representa uma demanda da empresa e é apresentado como um **ticket**.
+
+O MVP utiliza uma Web UI local como interface do participante e um Lab Engine em Python como núcleo responsável por jornada, diagnóstico, progressão, validação e evidências. PostgreSQL é executado localmente via Docker.
+
+O GitHub é utilizado para desenvolvimento, versionamento e distribuição do produto, mas não é parte obrigatória da experiência operacional do aluno. O participante não precisa criar fork, branch ou Pull Request para executar uma jornada ou receber validação.
 
 A jornada não segue necessariamente uma sequência fixa de dificuldade. O laboratório deve manter um modelo de competências baseado em evidências e selecionar desafios adequados ao estágio atual, de forma que participantes com níveis iniciais diferentes sejam desafiados desde o início.
 
@@ -119,7 +123,9 @@ A promoção para `published` exige um número mínimo de execuções reais e ev
 
 ### Entrada e onboarding
 
-O participante encontra o projeto, prepara seu ambiente e executa o onboarding para conhecer a empresa, documentação, banco e fluxo de trabalho.
+O participante inicia a aplicação local, prepara o ambiente quando necessário e executa o onboarding para conhecer a empresa, documentação, banco e fluxo de trabalho.
+
+A Web UI local é a interface principal dessa experiência. Operações Git não são pré-requisito pedagógico nem operacional para completar o onboarding.
 
 ### Objetivo profissional
 
@@ -170,9 +176,13 @@ Skips recorrentes podem provocar recalibração, pedido opcional de contexto ou 
 
 ### Entrega e validação
 
-A entrega técnica é validada prioritariamente por testes determinísticos. IA pode complementar com feedback contextualizado e perguntas sobre decisões, comportamento da solução, edge cases e trade-offs.
+A solução é submetida ou referenciada pela aplicação local conforme o contrato do ticket.
+
+A entrega técnica é validada prioritariamente por testes determinísticos executados pelo Lab Engine em ambiente controlado. IA pode complementar com feedback contextualizado e perguntas sobre decisões, comportamento da solução, edge cases e trade-offs.
 
 Uma entrega pode estar tecnicamente concluída enquanto determinada competência permanece sem evidências suficientes de domínio.
+
+GitHub Actions pode ser utilizado para CI do próprio produto, mas não é o mecanismo obrigatório de validação do participante no MVP.
 
 ### Evidências e adaptação
 
@@ -186,7 +196,9 @@ O participante pode solicitar um PROBE curto de recalibração. O próprio Lab t
 
 ### Continuidade
 
-Learner Model, evidências e estado da jornada são persistentes. O participante pode interromper e continuar posteriormente de onde parou. No MVP, existe uma jornada ativa por vez.
+Learner Model, evidências e estado da jornada são persistentes localmente. O participante pode interromper e continuar posteriormente de onde parou. No MVP, existe uma jornada ativa por vez.
+
+Persistência centralizada, login e sincronização entre dispositivos não são requisitos do MVP.
 
 ### Evolução e conclusão
 
@@ -202,19 +214,42 @@ Ao final, o participante recebe um perfil qualitativo por competência, mostrand
 
 A próxima jornada é recomendada com base no perfil final, lacunas, pré-requisitos e objetivo profissional; a escolha final permanece com o participante.
 
-## 8. Modelo Git
+## 8. Arquitetura de experiência do MVP
 
-### Repositório principal
+O MVP deve ser local e composto por três elementos principais:
 
-É mantido pelo projeto e contém a versão oficial do simulador.
+```text
+Browser
+   │
+   ▼
+Local Web UI
+   │
+   ▼
+Lab Engine (Python)
+   │
+   ├── PostgreSQL via Docker
+   └── persistência local
+```
 
-### Fork do participante
+### Web UI
 
-Cada participante possui seu próprio fork, permitindo histórico e CI próprios sem receber PRs de participantes no repositório principal.
+Responsável pela interação com o participante: onboarding, objetivo profissional, PROBE, visualização de tickets, submissão/referência da solução, feedback, assistência, skip e progresso qualitativo.
 
-### Sincronização
+### Lab Engine
 
-Novos tickets e evoluções são publicados no repositório principal. Participantes sincronizam seus forks com o `upstream`. Alterações devem minimizar conflitos com áreas destinadas às soluções.
+Responsável pelas regras centrais da experiência: estado da jornada, PROBE, Learner Model, Challenge Selector, validação, Evidence Engine e integração controlada com geração/feedback por IA.
+
+A lógica pedagógica e de progressão não deve ser duplicada na Web UI.
+
+### API
+
+Uma API de rede separada não é requisito do MVP. A separação entre Web UI e Lab Engine deve existir em código e contratos internos para permitir evolução posterior para backend/API sem antecipar infraestrutura distribuída.
+
+### GitHub
+
+O GitHub permanece como fonte de verdade do código e documentação do produto e como mecanismo de desenvolvimento/versionamento.
+
+Forks de participantes, PRs de entrega e sincronização com `upstream` não fazem parte do fluxo mínimo da experiência local. Eles podem ser reavaliados futuramente para casos específicos, mas não devem orientar a arquitetura do MVP.
 
 ## 9. Progressão
 
@@ -240,7 +275,7 @@ Competências técnicas e profissionais são dimensões distintas do Learner Mod
 
 A validação não deve depender apenas da comparação textual com uma resposta oficial. Sempre que possível, deve verificar comportamento e resultado.
 
-Para SQL, exemplos incluem execução sem erro, registros esperados/invalidos, colunas obrigatórias, regras de negócio, restrições explícitas e limites de performance quando aplicáveis.
+Para SQL, exemplos incluem execução sem erro, registros esperados/inválidos, colunas obrigatórias, regras de negócio, restrições explícitas e limites de performance quando aplicáveis.
 
 A avaliação híbrida segue a prioridade:
 
@@ -255,65 +290,81 @@ O LLM não deve ser autoridade única para critérios verificáveis deterministi
 
 Gamificação é possibilidade, não requisito do MVP. Evoluções permanecem no [ROADMAP](ROADMAP.md).
 
-## 12. Uso de IA e agentes
+## 12. Uso de IA
 
-No MVP, IA pode apoiar geração controlada de candidatos, adaptação de pistas, seleção/construção de desafios dentro de restrições e feedback técnico.
+IA deve apoiar a experiência onde houver benefício concreto, sem substituir mecanismos determinísticos ou criar dependência desnecessária.
 
-Regras e validações determinísticas devem ser preferidas quando suficientes por serem mais previsíveis e auditáveis. Skill Graph sofisticado, Progression Agent autônomo e arquitetura multiagente permanecem evoluções pós-MVP.
+Usos previstos no MVP incluem:
 
-## 13. MVP
+- apoio à condução e análise do PROBE;
+- apoio à seleção ou geração de desafios dentro de regras auditáveis;
+- adaptação controlada de pistas;
+- feedback contextualizado sobre evidências e decisões;
+- perguntas pós-entrega;
+- geração de candidatos a tickets quando o catálogo não possuir cobertura adequada.
 
-### Objetivo
+O ciclo básico de validação determinística deve continuar funcional mesmo quando recursos externos de IA estiverem indisponíveis, sempre que tecnicamente possível.
 
-Validar se o formato de simulador profissional consegue desafiar participantes com níveis iniciais distintos por meio de um ciclo adaptativo baseado em evidências, sem exigir uma plataforma sofisticada.
+## 13. Vertical slice inicial
 
-### Escopo
+Antes de expandir significativamente o catálogo ou sofisticar agentes, o MVP deve provar este fluxo ponta a ponta:
 
-- empresa fictícia e PostgreSQL local reproduzível;
-- ticket 000 de onboarding;
-- objetivo profissional + PROBE SQL curto e adaptativo;
-- Learner Model mínimo, genérico e persistente;
-- competências técnicas e profissionais separadas;
-- catálogo SQL suficiente para jornadas distintas;
-- jornada de aproximadamente 10 desafios, com conclusão por evidências de evolução/transferência;
-- seleção híbrida e auditável do próximo desafio;
-- testes determinísticos e feedback assistido por IA;
-- perguntas pós-entrega quando necessárias para verificar compreensão;
-- assistência progressiva e registro de seu impacto na força das evidências;
-- persistência e retomada da jornada;
-- perfil final qualitativo e recomendação da próxima jornada;
-- geração de desafios candidatos e lifecycle controlado até publicação;
-- Learning Resources relacionados aos tickets quando aplicável;
-- teste com primeiros usuários.
+```text
+iniciar Lab
+   ↓
+informar objetivo profissional
+   ↓
+executar PROBE SQL
+   ↓
+criar / atualizar Learner Model
+   ↓
+selecionar 1 ticket
+   ↓
+participante resolve
+   ↓
+validar SQL localmente
+   ↓
+registrar evidências
+   ↓
+atualizar Learner Model
+   ↓
+selecionar próximo ticket
+```
 
-### Fora do MVP
+Se esse ciclo funcionar para usuários reais com níveis iniciais distintos, o núcleo do produto estará validado o suficiente para justificar expansão do catálogo e dos componentes adaptativos.
 
-- backend/autenticação próprios;
-- pagamento, ranking global e infraestrutura cloud obrigatória;
-- múltiplas jornadas simultâneas;
-- Skill Graph sofisticado;
-- Progression Agent autônomo;
-- inferência irrestrita por LLM;
-- arquitetura multiagente;
-- Airflow e demais trilhas.
+## 14. Evolução para plataforma
 
-## 14. Questões em aberto
+Uma plataforma hospedada é uma possibilidade posterior, não premissa do MVP.
 
-Permanecem para detalhamento:
+Se o produto local demonstrar valor e houver necessidade comercial/operacional, a arquitetura poderá evoluir para incluir:
 
-- modelo exato de versionamento dos tickets;
-- formato dos arquivos de solução e proteção dos testes esperados;
-- estratégia de atualização do fork sem sobrescrever soluções;
-- taxonomia e lista inicial de competências técnicas/profissionais do MVP;
-- fórmula inicial de atualização de `mastery` e `confidence`;
-- thresholds de evidência para progressão e conclusão;
-- regras determinísticas do Challenge Engine;
-- quantidade/cobertura inicial do catálogo;
-- valor mínimo de execuções reais para `candidate -> published`;
-- critérios objetivos de risco que exigem revisão humana;
-- estrutura e localização dos Learning Resources;
-- se e como Learning Resources serão selecionados adaptativamente;
-- schema do gerador e do lifecycle de tickets;
-- critérios e limites do AI Code Reviewer;
-- identidade e domínio da empresa fictícia;
-- licença do projeto.
+- backend/API;
+- autenticação;
+- contas e perfis centralizados;
+- persistência centralizada;
+- execução remota;
+- testes privados;
+- multiusuário;
+- portal web hospedado;
+- controle de acesso e eventual modelo de assinatura.
+
+A arquitetura local deve facilitar essa evolução por separação de responsabilidades, mas não deve implementar antecipadamente componentes distribuídos sem necessidade comprovada.
+
+## 15. Critério de sucesso do MVP
+
+O MVP será considerado validado quando participantes externos com níveis iniciais distintos conseguirem, sem intervenção constante do mantenedor:
+
+- iniciar o laboratório localmente;
+- concluir onboarding;
+- executar o PROBE;
+- receber um desafio coerente com suas evidências;
+- resolver e validar tecnicamente a entrega;
+- compreender o feedback;
+- ter o Learner Model atualizado;
+- receber o próximo desafio de forma adaptativa;
+- interromper e retomar a jornada;
+- percorrer uma experiência suficientemente realista para avaliar valor educacional;
+- demonstrar que novos desafios podem entrar no catálogo por processo controlado de qualificação.
+
+A decisão de evoluir para uma plataforma comercial deve ocorrer somente depois dessa validação.
