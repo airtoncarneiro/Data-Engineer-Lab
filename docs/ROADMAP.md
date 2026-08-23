@@ -12,33 +12,47 @@ Essas dimensões podem ser combinadas ao longo das fases. A introdução de cen�
 
 ## Fase 0 — Fundação
 
-Objetivo: transformar o Discovery em um repositório executável.
+Objetivo: transformar o Discovery em uma aplicação local executável.
 
 Entregas:
 
 - definir nome provisório;
 - definir empresa fictícia;
-- criar repositório;
 - estruturar documentação;
 - definir convenções de tickets;
 - definir schema mínimo para tickets estruturados;
 - incluir tipo, competências-alvo, dificuldade estimada e pré-requisitos no modelo de ticket;
 - criar Docker Compose;
 - criar PostgreSQL inicial;
-- definir mecanismo de reset do ambiente.
+- definir mecanismo de reset do ambiente;
+- definir estrutura mínima do Lab Engine em Python;
+- definir contratos internos entre Lab Engine e Web UI;
+- definir persistência local mínima para jornada, Learner Model e evidências;
+- criar Web UI local mínima para operar o vertical slice.
+
+O GitHub permanece como repositório de desenvolvimento, versionamento e distribuição, mas fork, Pull Request e GitHub Actions não são requisitos operacionais do participante.
 
 ## Fase 1 — MVP SQL
 
-Objetivo: validar a experiência principal e o ciclo adaptativo mínimo: diagnóstico, desafio, evidência, atualização do perfil e seleção do próximo desafio.
+Objetivo: validar a experiência principal e o ciclo adaptativo mínimo em execução local: diagnóstico, desafio, evidência, atualização do perfil e seleção do próximo desafio.
+
+A implementação deve começar por um **vertical slice ponta a ponta** antes da expansão significativa do catálogo:
+
+`iniciar Lab -> objetivo profissional -> PROBE -> Learner Model -> 1 ticket -> solução -> validação -> evidência -> atualização -> próximo ticket`
 
 Entregas:
 
-- ticket 000 de onboarding;
+- onboarding operado pela aplicação local;
 - coleta do objetivo profissional antes do diagnóstico;
 - PROBE SQL curto, discriminativo e adaptativo, cobrindo escrita e compreensão conceitual;
 - PROBE híbrido, prioritariamente conversacional e com execução real quando necessária para aumentar a confiança;
 - Learner Model mínimo e persistente, genérico por competência, com `mastery`, `confidence` e quantidade de evidências;
 - separação entre competências técnicas e profissionais, sendo as profissionais inferidas principalmente durante os tickets;
+- Lab Engine Python responsável por jornada, PROBE, Learner Model, seleção, validação, evidências e assistência;
+- Web UI local como interface principal do participante;
+- persistência local da jornada e retomada do ponto anterior;
+- PostgreSQL local via Docker para ambiente técnico dos desafios;
+- validador SQL local e determinístico;
 - catálogo SQL suficiente para compor jornadas distintas;
 - jornada individual de aproximadamente 10 desafios, usando o número como referência de duração e não como critério de conclusão;
 - seleção do próximo desafio por mecanismo híbrido: regras auditáveis definem prioridades/restrições e IA pode apoiar seleção ou construção dentro desses limites;
@@ -54,16 +68,11 @@ Entregas:
 - em desafios difíceis, oferta de pistas, decomposição ou Learning Resources antes de troca, conforme escolha do participante;
 - pistas-base validadas com adaptação controlada por IA;
 - PROBE curto de recalibração quando solicitado pelo participante ou quando o Lab detectar má calibração persistente, sempre após o ticket corrente;
-- persistência da jornada e retomada do ponto anterior;
 - uma jornada ativa por vez;
 - conclusão baseada em evidências suficientes de evolução e transferência, não em quantidade fixa de tickets;
 - extensão adaptativa opcional para lacunas remanescentes;
 - perfil final qualitativo por competência, mostrando evolução entre entrada e saída sem expor obrigatoriamente scores internos;
 - recomendação da próxima jornada com base no perfil, pré-requisitos, lacunas e objetivo profissional;
-- área padronizada para soluções;
-- Pull Request template;
-- testes automáticos e GitHub Actions;
-- documentação para fork e sincronização com upstream;
 - geração assistida por IA de desafios candidatos quando o catálogo não cobrir adequadamente a necessidade;
 - lifecycle mínimo de desafios gerados: `candidate -> validated -> trialed -> published`;
 - validações automáticas antes do primeiro uso; revisão humana obrigatória apenas quando o risco, subjetividade ou baixa confiança impedirem validação automática suficiente;
@@ -74,9 +83,11 @@ Entregas:
 
 A adaptação do MVP deve permanecer simples e auditável. O Learner Model mínimo não implica Skill Graph completo, Progression Agent autônomo ou inferência irrestrita por LLM.
 
+GitHub Actions pode ser utilizado para qualidade e CI do próprio produto, mas não é o mecanismo obrigatório de validação das soluções do participante. Da mesma forma, fork, branch e Pull Request não pertencem ao fluxo mínimo do aluno.
+
 Critério de saída:
 
-Participantes externos com níveis iniciais distintos conseguem executar onboarding, passar por um PROBE curto, receber desafios adequados, evoluir com base em evidências e interpretar feedback sem intervenção constante do mantenedor. A jornada demonstra adaptação real a diferentes perfis e consegue incorporar novos desafios ao catálogo por um processo controlado de qualificação.
+Participantes externos com níveis iniciais distintos conseguem iniciar a aplicação local, executar onboarding, passar por um PROBE curto, receber desafios adequados, submeter soluções, obter validação e feedback, interromper e retomar a jornada e evoluir com base em evidências sem intervenção constante do mantenedor. A jornada demonstra adaptação real a diferentes perfis e consegue incorporar novos desafios ao catálogo por um processo controlado de qualificação.
 
 ## Fase 2 — SQL avançado e modelagem
 
@@ -184,22 +195,26 @@ Responsabilidades possíveis:
 - questionar decisões técnicas e trade-offs;
 - apontar complexidade desnecessária;
 - estimular justificativa técnica do participante;
-- utilizar evidências produzidas pelo CI como contexto para o feedback.
+- utilizar evidências produzidas pelo validador como contexto para o feedback.
 
 Critérios objetivos que possam ser testados devem continuar sendo validados por testes e verificações determinísticas.
 
 ## Fase 8 — Plataforma opcional
 
-Somente se houver necessidade comprovada:
+Somente se houver necessidade comprovada após validação do produto local:
 
-- backend;
+- backend/API;
 - autenticação;
-- perfil do participante;
+- perfil do participante centralizado;
 - histórico centralizado;
 - evidências de competência centralizadas;
+- execução remota;
+- testes privados;
+- multiusuário;
+- mensalidade/entitlements, se houver modelo comercial;
+- portal web hospedado;
 - badges;
 - ranking;
-- portal web;
 - métricas de aprendizagem/prática;
 - visualização de progressão e competências.
 
