@@ -18,6 +18,8 @@ Sempre que o custo for razoável, utilizar práticas e ferramentas encontradas n
 
 Os primeiros tickets devem permitir adaptação ao ambiente. Os seguintes aumentam gradualmente ambiguidade, volume, dependências e responsabilidade técnica.
 
+A progressão deve considerar tanto a complexidade tecnológica quanto a natureza do trabalho executado: construir, modificar, corrigir, refatorar, otimizar, investigar e operar.
+
 ## 5. Validar comportamento, não resposta textual
 
 Sempre que possível, testar o resultado produzido pela solução em vez de exigir uma implementação idêntica à solução de referência.
@@ -40,18 +42,28 @@ O simulador não é um curso. Os desafios podem fornecer Learning Resources e re
 
 Os recursos devem priorizar conceitos reutilizáveis e fontes confiáveis, especialmente documentação oficial. O participante decide se precisa consultá-los.
 
-## 10. Feedback automatizado primeiro
+## 10. Nem todo trabalho começa do zero
+
+O laboratório deve representar cenários greenfield e brownfield.
+
+Tickets podem exigir compreensão, correção, refatoração, otimização ou evolução de código e pipelines existentes, inclusive quando houver documentação incompleta, nomenclatura ruim, lógica confusa, testes insuficientes ou decisões legadas.
+
+O objetivo não é produzir código ruim artificialmente, mas reproduzir situações plausíveis em que o participante precisa entender o estado atual antes de alterá-lo com segurança.
+
+## 11. Feedback automatizado primeiro
 
 O projeto deve escalar sem depender de revisão humana para cada participante.
 
-## 11. Conteúdo é o principal ativo
+Quando houver revisão assistida por IA, ela deve complementar a validação determinística com feedback sobre legibilidade, manutenibilidade, trade-offs, edge cases e decisões técnicas. A IA não deve substituir testes objetivos quando o comportamento puder ser verificado deterministicamente.
+
+## 12. Conteúdo é o principal ativo
 
 Infraestrutura deve permanecer simples sempre que possível. A qualidade da empresa simulada, dos dados, dos tickets e dos critérios de validação é mais importante que uma plataforma sofisticada.
 
-## 12. MVP antes de plataforma
+## 13. MVP antes de plataforma
 
 Não construir portal, backend, ranking ou arquitetura distribuída antes de validar que a experiência básica gera valor.
 
-## 13. IA aumenta escala, não reduz qualidade
+## 14. IA aumenta escala, não reduz qualidade
 
 Agentes poderão apoiar geração e revisão de conteúdo, mas desafios oficiais precisam ser coerentes, reproduzíveis e tecnicamente verificáveis.
