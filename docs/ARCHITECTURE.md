@@ -138,7 +138,7 @@ No MVP, evitar dependências externas obrigatórias para execução das soluçõ
 │
 ├── tests/
 │   ├── ticket-001/
-│   ├── ticket_002/
+│   ├── ticket-002/
 │   └── ...
 │
 └── .github/
