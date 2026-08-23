@@ -6,7 +6,7 @@ A progressão do laboratório deve considerar três dimensões complementares:
 
 - **complexidade tecnológica**: SQL, modelagem, Python, Airflow, plataforma, cloud e operação;
 - **natureza do trabalho**: construir, modificar, corrigir, refatorar, otimizar, investigar e operar/troubleshooting;
-- **proficiência demonstrada**: evidências acumuladas sobre as competências do participante para selecionar desafios adequados ao seu estágio atual.
+- **proficiência demonstrada**: evidências acumuladas sobre competências técnicas e profissionais para selecionar desafios adequados ao estágio atual.
 
 Essas dimensões podem ser combinadas ao longo das fases. A introdução de cenários brownfield não constitui uma fase isolada: é uma característica transversal dos tickets.
 
@@ -22,40 +22,61 @@ Entregas:
 - estruturar documentação;
 - definir convenções de tickets;
 - definir schema mínimo para tickets estruturados;
-- incluir tipo de ticket como metadado do modelo;
-- incluir competências-alvo, dificuldade estimada e pré-requisitos mínimos no modelo de ticket;
+- incluir tipo, competências-alvo, dificuldade estimada e pré-requisitos no modelo de ticket;
 - criar Docker Compose;
 - criar PostgreSQL inicial;
 - definir mecanismo de reset do ambiente.
 
 ## Fase 1 — MVP SQL
 
-Objetivo: validar a experiência principal, a seleção adaptativa simples de desafios e a geração assistida de tickets.
+Objetivo: validar a experiência principal e o ciclo adaptativo mínimo: diagnóstico, desafio, evidência, atualização do perfil e seleção do próximo desafio.
 
 Entregas:
 
 - ticket 000 de onboarding;
+- coleta do objetivo profissional antes do diagnóstico;
+- PROBE SQL curto, discriminativo e adaptativo, cobrindo escrita e compreensão conceitual;
+- PROBE híbrido, prioritariamente conversacional e com execução real quando necessária para aumentar a confiança;
+- Learner Model mínimo e persistente, genérico por competência, com `mastery`, `confidence` e quantidade de evidências;
+- separação entre competências técnicas e profissionais, sendo as profissionais inferidas principalmente durante os tickets;
 - catálogo SQL suficiente para compor jornadas distintas;
-- jornada individual de aproximadamente 10 desafios SQL selecionados conforme diagnóstico inicial e evidências de proficiência;
-- diagnóstico inicial simples e discriminativo, sem depender apenas de senioridade declarada;
-- progressão baseada em competências demonstradas, sem exigir Skill Graph sofisticado;
+- jornada individual de aproximadamente 10 desafios, usando o número como referência de duração e não como critério de conclusão;
+- seleção do próximo desafio por mecanismo híbrido: regras auditáveis definem prioridades/restrições e IA pode apoiar seleção ou construção dentro desses limites;
+- competências-alvo mantidas como metadados internos durante a execução do ticket;
+- registro de múltiplas evidências por competência e verificação de transferência em contextos diferentes quando aplicável;
+- distinção entre entrega tecnicamente concluída e domínio demonstrado;
+- perguntas pós-entrega quando úteis para verificar compreensão, decisões e trade-offs;
+- pesquisa, documentação e IA permitidas ao participante;
+- registro do nível de assistência direcionada utilizado para ponderar a força das evidências;
+- tempo de execução registrado apenas como telemetria no MVP;
+- possibilidade de `skip` sem inferir automaticamente falta de competência;
+- sinalização de desafio muito fácil como autoavaliação, a ser confirmada por evidências posteriores;
+- em desafios difíceis, oferta de pistas, decomposição ou Learning Resources antes de troca, conforme escolha do participante;
+- pistas-base validadas com adaptação controlada por IA;
+- PROBE curto de recalibração quando solicitado pelo participante ou quando o Lab detectar má calibração persistente, sempre após o ticket corrente;
+- persistência da jornada e retomada do ponto anterior;
+- uma jornada ativa por vez;
+- conclusão baseada em evidências suficientes de evolução e transferência, não em quantidade fixa de tickets;
+- extensão adaptativa opcional para lacunas remanescentes;
+- perfil final qualitativo por competência, mostrando evolução entre entrada e saída sem expor obrigatoriamente scores internos;
+- recomendação da próxima jornada com base no perfil, pré-requisitos, lacunas e objetivo profissional;
 - área padronizada para soluções;
 - Pull Request template;
-- testes automáticos;
-- GitHub Actions;
+- testes automáticos e GitHub Actions;
 - documentação para fork e sincronização com upstream;
-- gerador assistido por IA para propostas estruturadas de tickets;
-- validação humana/editorial antes da publicação de tickets gerados;
-- estrutura mínima para registrar evidências objetivas das entregas por competência;
+- geração assistida por IA de desafios candidatos quando o catálogo não cobrir adequadamente a necessidade;
+- lifecycle mínimo de desafios gerados: `candidate -> validated -> trialed -> published`;
+- validações automáticas antes do primeiro uso; revisão humana obrigatória apenas quando o risco, subjetividade ou baixa confiança impedirem validação automática suficiente;
+- número mínimo de execuções reais antes da promoção de um candidato a `published`, com valor exato definido durante implementação;
+- telemetria contínua de tickets publicados para sinalizar necessidade de revisão;
 - feedback por IA sobre entregas quando viável, apoiado por resultados determinísticos;
-- possibilidade de incluir pontualmente tickets não greenfield quando agregarem valor ao MVP, sem exigir cobertura de toda a taxonomia;
 - teste com primeiros usuários.
 
-A adaptação do MVP deve permanecer simples e auditável. A seleção do próximo desafio pode utilizar metadados dos tickets, pré-requisitos, diagnóstico inicial e evidências acumuladas, sem depender de inferência contínua por LLM ou de um Progression Agent autônomo.
+A adaptação do MVP deve permanecer simples e auditável. O Learner Model mínimo não implica Skill Graph completo, Progression Agent autônomo ou inferência irrestrita por LLM.
 
 Critério de saída:
 
-Participantes externos com níveis iniciais distintos conseguem executar onboarding, receber desafios adequados às competências demonstradas, resolver aproximadamente 10 desafios e interpretar feedback do CI sem intervenção constante do mantenedor. O projeto também consegue gerar propostas de tickets por IA que respeitam as convenções pedagógicas e técnicas antes de revisão/publicação.
+Participantes externos com níveis iniciais distintos conseguem executar onboarding, passar por um PROBE curto, receber desafios adequados, evoluir com base em evidências e interpretar feedback sem intervenção constante do mantenedor. A jornada demonstra adaptação real a diferentes perfis e consegue incorporar novos desafios ao catálogo por um processo controlado de qualificação.
 
 ## Fase 2 — SQL avançado e modelagem
 
@@ -70,15 +91,16 @@ Possibilidades:
 - problemas de qualidade;
 - mudanças de regra de negócio;
 - tickets `bugfix`, `refactoring`, `performance` e `legacy` aplicados a SQL;
-- cenários brownfield com queries existentes cujo comportamento precisa ser compreendido e preservado;
+- cenários brownfield;
 - expansão do catálogo para melhorar cobertura de competências e faixas de proficiência;
-- variações de desafios geradas a partir de competências e dificuldade informadas;
+- melhoria dos critérios de qualificação de desafios gerados;
 - desafios de transferência que exercitem princípios já demonstrados em contextos diferentes.
 
 ## Fase 3 — Python e ETL/ELT
 
 Possibilidades:
 
+- PROBE técnico próprio da jornada, reutilizando evidências existentes no Learner Model quando aplicável;
 - ingestão de arquivos;
 - transformação;
 - idempotência;
@@ -134,25 +156,22 @@ A natureza do trabalho passa a enfatizar investigação e operação. Tickets po
 
 ## Fase 7 — IA avançada e adaptação
 
-Objetivo: evoluir da seleção adaptativa simples e da geração assistida do MVP para personalização e automação baseadas em evidências mais ricas.
+Objetivo: sofisticar o ciclo adaptativo validado no MVP, sem alterar seus princípios fundamentais.
 
 Possibilidades:
 
-- Learner Model persistente por competência;
-- mastery, confidence, misconceptions, quantidade e diversidade de evidências;
-- agente gerador de datasets;
+- Learner Model enriquecido com misconceptions, recência e diversidade de contextos;
+- Skill Graph e dependências explícitas entre competências;
+- inferência contínua mais sofisticada a partir do histórico;
+- Progression Agent;
+- revisão espaçada e testes sistemáticos de retenção;
+- geração altamente individualizada de tickets e datasets;
 - agente de testes;
-- AI Code Reviewer;
+- AI Code Reviewer avançado;
 - agente simulando stakeholder;
 - avaliação assistida por LLM para critérios subjetivos;
-- Skill Graph;
-- inferência contínua de competências a partir do histórico;
-- seleção adaptativa da próxima competência;
-- Progression Agent;
-- revisão espaçada e testes de retenção;
-- testes de transferência entre contextos diferentes;
-- geração de variações individualizadas de tickets;
-- arquitetura multiagente.
+- arquitetura multiagente;
+- políticas de promoção e despublicação de desafios baseadas em telemetria acumulada.
 
 ### AI Code Reviewer
 
@@ -167,9 +186,7 @@ Responsabilidades possíveis:
 - estimular justificativa técnica do participante;
 - utilizar evidências produzidas pelo CI como contexto para o feedback.
 
-Critérios objetivos que possam ser testados devem continuar sendo validados por testes e verificações determinísticas. O revisor por IA não deve atuar como autoridade única de aprovação da entrega.
-
-A publicação totalmente autônoma de desafios deverá ser considerada apenas se houver mecanismos suficientes de validação, observabilidade e governança.
+Critérios objetivos que possam ser testados devem continuar sendo validados por testes e verificações determinísticas.
 
 ## Fase 8 — Plataforma opcional
 
@@ -190,16 +207,16 @@ A visão de longo prazo poderá convergir para uma **plataforma adaptativa de tr
 
 ## Direção arquitetural pós-MVP (hipótese)
 
-O diagrama abaixo representa uma possível direção conceitual para evolução após a validação do MVP. É uma hipótese de arquitetura, não uma arquitetura aprovada nem um compromisso de implementação.
+O diagrama abaixo representa uma possível sofisticação do mecanismo validado no MVP, não uma arquitetura aprovada nem um compromisso de implementação.
 
 ```text
-Skill Profile / Skill Graph
+Learner Model / Skill Graph
           │
           ▼
    Progression Agent
           │
           ▼
-    Task Generator
+    Challenge Engine
           │
           ▼
         Ticket
@@ -208,10 +225,10 @@ Skill Profile / Skill Graph
     Participante
           │
           ▼
-Validação determinística + AI Code Review
+Validação determinística + AI Review
           │
           ▼
       Evidências
           │
-          └──────────► Skill Profile
+          └──────────► Learner Model
 ```

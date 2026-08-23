@@ -2,19 +2,13 @@
 
 ## 1. Contexto
 
-Pessoas que desejam ingressar em Engenharia de Dados conseguem estudar SQL, Python, Airflow, modelagem e outras tecnologias por diversas fontes. Entretanto, muitas não trabalham na área e, portanto, não possuem oportunidade de aplicar esses conhecimentos em um ambiente integrado.
+Pessoas que desejam ingressar em Engenharia de Dados conseguem estudar SQL, Python, Airflow, modelagem e outras tecnologias por diversas fontes. Entretanto, muitas não trabalham na área e não possuem oportunidade de aplicar esses conhecimentos em um ambiente integrado.
 
 Exercícios tradicionais normalmente isolam a tecnologia do contexto. O aluno recebe instruções como "faça um SELECT com JOIN" ou "crie uma DAG", mas não vivencia o processo de entender por que aquilo precisa ser feito, quais dados utilizar, quais restrições existem e como a entrega seria validada.
 
 ## 2. Problema
 
-Existe uma lacuna entre:
-
-**saber utilizar uma ferramenta**
-
- e
-
-**saber resolver uma demanda de Engenharia de Dados utilizando essa ferramenta**.
+Existe uma lacuna entre **saber utilizar uma ferramenta** e **saber resolver uma demanda de Engenharia de Dados utilizando essa ferramenta**.
 
 Essa lacuna é especialmente relevante para quem busca a primeira oportunidade profissional.
 
@@ -36,11 +30,9 @@ Principalmente:
 
 Um **simulador de trabalho de Engenharia de Dados**, baseado inicialmente em GitHub e containers locais.
 
-O repositório representa uma empresa fictícia e contém seu ambiente, sistemas, dados, documentação e desafios.
+O repositório representa uma empresa fictícia e contém seu ambiente, sistemas, dados, documentação e desafios. Cada desafio representa uma demanda da empresa e é apresentado como um **ticket**.
 
-Cada desafio representa uma demanda da empresa e é apresentado como um **ticket**.
-
-A jornada do participante não precisa seguir uma sequência fixa de dificuldade. O laboratório deve selecionar desafios adequados à proficiência demonstrada, de forma que participantes com níveis iniciais diferentes continuem sendo desafiados desde o início.
+A jornada não segue necessariamente uma sequência fixa de dificuldade. O laboratório deve manter um modelo de competências baseado em evidências e selecionar desafios adequados ao estágio atual, de forma que participantes com níveis iniciais diferentes sejam desafiados desde o início.
 
 ## 6. Ticket como unidade de trabalho
 
@@ -64,137 +56,146 @@ Cada ticket poderá conter:
 - critérios de aceite;
 - restrições conhecidas;
 - artefatos relacionados;
-- dependências, quando existirem;
-- competências ou conceitos-alvo;
+- dependências;
+- competências técnicas e profissionais alvo, mantidas como metadados internos durante a execução quando revelá-las produzir pistas;
 - dificuldade estimada;
-- pré-requisitos, quando aplicável;
-- Learning Resources relacionados, quando aplicável.
+- pré-requisitos;
+- Learning Resources relacionados.
 
 ### 6.1 Tipos de ticket
 
-Os tickets podem representar diferentes naturezas de trabalho. Tipo de ticket e dificuldade são dimensões independentes: um `bugfix`, por exemplo, pode ser introdutório ou avançado.
+Tipo e dificuldade são dimensões independentes. Taxonomia inicial:
 
-Taxonomia inicial:
-
-- `feature`: construir uma nova capacidade, transformação ou entrega;
+- `feature`: construir nova capacidade, transformação ou entrega;
 - `bugfix`: corrigir comportamento incorreto;
-- `refactoring`: melhorar uma implementação preservando seu comportamento esperado;
+- `refactoring`: melhorar implementação preservando comportamento esperado;
 - `performance`: investigar e melhorar desempenho;
-- `legacy`: compreender e modificar uma solução herdada ou pouco conhecida;
-- `incident`: investigar e recuperar uma falha operacional ou degradação de serviço.
+- `legacy`: compreender e modificar solução herdada ou pouco conhecida;
+- `incident`: investigar e recuperar falha operacional ou degradação.
 
-A taxonomia poderá evoluir conforme novos cenários sejam introduzidos, evitando criar tipos sem benefício educacional claro.
+A taxonomia poderá evoluir conforme novos cenários sejam introduzidos, evitando tipos sem benefício educacional claro.
 
 ### 6.2 Cenários greenfield e brownfield
 
-O simulador deve representar tanto trabalho greenfield quanto brownfield.
+O simulador deve representar trabalho greenfield e brownfield.
 
-Em cenários greenfield, o participante constrói uma solução nova a partir de uma demanda.
+Em cenários greenfield, o participante constrói uma solução nova. Em cenários brownfield, parte da solução já existe e precisa ser compreendida antes da alteração. O participante pode receber código, SQL, pipeline, configuração, testes ou documentação existentes, incluindo situações plausíveis como documentação parcial, regras implícitas, testes insuficientes, gargalos e comportamento que precisa ser preservado.
 
-Em cenários brownfield, parte da solução já existe e precisa ser compreendida antes de qualquer alteração. O participante pode receber código, SQL, pipeline, configuração, testes ou documentação existentes, incluindo situações plausíveis como:
+Esses cenários devem treinar leitura, investigação, manutenção segura e tomada de decisão, não exposição artificial a código propositalmente ruim.
 
-- documentação parcial ou desatualizada;
-- nomes pouco claros;
-- lógica complexa ou acoplada;
-- testes insuficientes;
-- regras de negócio implícitas;
-- gargalos de performance;
-- comportamento correto que precisa ser preservado durante a mudança.
+### 6.3 Learning Resources e assistência
 
-Esses cenários devem treinar leitura, investigação, manutenção segura e tomada de decisão, não apenas exposição artificial a código propositalmente ruim.
-
-### 6.3 Learning Resources e material de apoio
-
-Os tickets podem indicar materiais de apoio para permitir que o participante adquira ou revise conceitos necessários para resolver a demanda sem transformar o simulador em um curso.
+Learning Resources permitem adquirir ou revisar conceitos necessários sem transformar o simulador em curso.
 
 Diretrizes:
 
-- a consulta aos materiais é opcional;
+- consulta opcional;
 - priorizar documentação oficial e fontes técnicas confiáveis;
-- os recursos devem ensinar conceitos, não entregar a solução específica do ticket;
-- preferir materiais autocontidos e reutilizáveis por diferentes tickets;
-- evitar duplicar explicações extensas dentro dos tickets;
-- um mesmo Learning Resource pode ser referenciado por vários tickets;
-- quando possível, organizar Learning Resources por domínio ou conceito.
+- ensinar conceitos, não a solução específica;
+- preferir materiais autocontidos, reutilizáveis e organizados por domínio ou conceito;
+- evitar duplicar explicações extensas nos tickets.
 
-Exemplo: se uma demanda exige conhecimento de PostgreSQL Window Functions, o ticket pode referenciar um material sobre Window Functions, mas não deve indicar qual função, particionamento ou ordenação resolve especificamente aquela demanda.
+Quando o participante tiver dificuldade, o Lab pode oferecer investigação/autocorreção, pistas graduais, decomposição e Learning Resources. Pistas devem possuir uma base validada e podem ter sua apresentação adaptada por IA dentro de limites definidos.
 
-A intenção é reproduzir um comportamento profissional: diante de uma demanda que exige conhecimento ainda não dominado, o participante identifica a lacuna, consulta documentação ou material técnico e aplica o conhecimento ao problema.
+O uso de assistência direcionada não invalida a entrega, mas pode reduzir a força da evidência de domínio. Pesquisa, documentação e IA utilizadas livremente como ferramentas profissionais não devem ser tratadas como infração.
 
-### 6.4 Geração de tickets por IA
+A seleção adaptativa de Learning Resources permanece uma decisão em aberto.
 
-A geração assistida de tickets por IA faz parte da direção do MVP.
+### 6.4 Geração e catálogo de tickets
 
-O gerador deverá receber informações estruturadas, como nível, domínio, competências ou conceitos-alvo e restrições do ambiente, e produzir uma proposta de ticket compatível com as convenções do projeto.
+O catálogo é evolutivo. O mecanismo deve priorizar desafios já qualificados quando houver cobertura adequada e pode gerar um novo candidato por IA quando o Learner Model exigir uma combinação de competências/dificuldade não atendida pelo catálogo.
 
-A proposta gerada deverá preservar os princípios pedagógicos do simulador:
+O gerador recebe informações estruturadas, como domínio, competências-alvo, dificuldade, pré-requisitos, objetivo da jornada e restrições do ambiente. O candidato deve representar demanda profissional plausível, evitar revelar a solução, incluir critérios verificáveis e respeitar tecnologias e dados disponíveis.
 
-- representar uma demanda profissional plausível;
-- evitar indicar diretamente a solução técnica;
-- incluir contexto, objetivo, requisitos, critérios de aceite e entregáveis;
-- relacionar Learning Resources quando aplicável;
-- respeitar dificuldade, pré-requisitos e tecnologias disponíveis;
-- permitir validação objetiva sempre que possível.
+**Gerado não significa publicado.** O lifecycle conceitual é:
 
-**Geração por IA não significa publicação autônoma.** Tickets oficiais continuam sujeitos a validação antes da publicação no catálogo do simulador.
+`candidate -> validated -> trialed -> published`
+
+Antes do primeiro uso, candidatos passam por validações automáticas. Revisão humana é necessária quando subjetividade, risco ou baixa confiança impedirem validação automática suficiente. Tickets integralmente verificáveis podem entrar em trial sem revisão humana obrigatória.
+
+A promoção para `published` exige um número mínimo de execuções reais e evidências de qualidade; o valor exato será definido na implementação. Tickets publicados continuam acumulando telemetria e podem ser sinalizados para revisão quando surgirem ambiguidades, dificuldade mal calibrada ou falhas inesperadas.
 
 ## 7. Jornada do participante
 
-### Entrada
+### Entrada e onboarding
 
-O participante encontra o projeto e faz fork do repositório.
+O participante encontra o projeto, prepara seu ambiente e executa o onboarding para conhecer a empresa, documentação, banco e fluxo de trabalho.
 
-### Onboarding
+### Objetivo profissional
 
-Executa um ticket inicial para:
+Antes do PROBE, o participante informa seu objetivo profissional. O objetivo pode influenciar a profundidade do diagnóstico e a priorização posterior de competências, sem substituir evidências de proficiência nem eliminar fundamentos essenciais.
 
-- conhecer a empresa;
-- ler a documentação;
-- subir o ambiente;
-- conectar-se ao banco;
-- executar verificações básicas.
+### PROBE técnico
 
-### Diagnóstico inicial
+Cada nova jornada possui seu próprio PROBE técnico. Para SQL, ele avalia escrita e compreensão conceitual; competências profissionais são observadas principalmente durante os tickets.
 
-Antes da jornada principal, o laboratório obtém evidências suficientes para estimar as competências relevantes do participante.
+O PROBE deve ser curto, discriminativo e adaptativo, usando aproximadamente cinco perguntas quando forem suficientes: começa com questões que diferenciem níveis, aumenta rapidamente a dificuldade diante de domínio aparente e investiga pré-requisitos quando encontra lacunas.
 
-O diagnóstico deve ser curto e discriminativo: aumentar rapidamente a dificuldade quando houver domínio aparente e investigar pré-requisitos quando surgirem lacunas. Senioridade declarada e autoavaliação podem ser usadas como sinais auxiliares, mas não substituem evidências de desempenho.
+O diagnóstico é híbrido: pode usar perguntas conversacionais, análise de SQL e respostas abertas, recorrendo à execução real no PostgreSQL quando isso aumentar a confiança da inferência.
 
-No MVP, esse diagnóstico pode ser simples e não exige um modelo sofisticado de Skill Graph.
+O resultado apresentado ao participante é qualitativo. Scores internos não precisam ser expostos.
 
-### Trabalho
+### Learner Model
 
-O laboratório seleciona um desafio compatível com as competências já demonstradas e com as evidências ainda necessárias. O participante cria sua implementação.
+O Lab mantém um Learner Model persistente e genérico por competência, reutilizável por futuras jornadas. O modelo mínimo do MVP registra:
 
-Participantes diferentes podem receber desafios distintos no mesmo estágio da jornada. "Ticket 1" significa o primeiro desafio daquele participante, não necessariamente o ticket mais fácil do catálogo.
+- `skill`;
+- categoria da competência: técnica ou profissional;
+- `mastery`;
+- `confidence`;
+- quantidade de evidências.
 
-### Entrega
+Uma resposta correta isolada não comprova domínio. Múltiplas evidências e aplicação em contextos diferentes aumentam a confiança. O modelo pode evoluir futuramente com misconceptions, recência, diversidade de contextos e Skill Graph.
 
-Abre uma Pull Request no próprio fork.
+### Seleção do desafio
 
-### Validação
+O próximo desafio considera Learner Model, objetivo profissional, pré-requisitos, competências prioritárias e evidências ainda necessárias.
 
-GitHub Actions executa testes automatizados e informa se os critérios verificáveis foram atendidos.
+O mecanismo é híbrido: regras determinísticas e auditáveis definem prioridades e restrições; IA pode apoiar seleção, adaptação ou geração do desafio dentro desses limites.
 
-Quando aplicável, a validação poderá combinar evidências determinísticas com análise assistida por IA para produzir feedback técnico mais contextualizado.
+As competências-alvo não são apresentadas antes do ticket quando isso puder induzir a solução. O participante recebe a demanda profissional.
 
-A revisão por IA deve complementar o CI com perguntas e observações sobre decisões técnicas, legibilidade, manutenibilidade, possíveis edge cases e trade-offs. Critérios objetivos continuam sendo responsabilidade prioritária das validações determinísticas.
+### Trabalho e autonomia
+
+O participante pode utilizar documentação, pesquisa e IA livremente.
+
+Pode também:
+
+- pular um ticket; o `skip` é informação operacional e não evidência automática de falta de competência;
+- sinalizar que um desafio está muito fácil; isso é autoavaliação e precisa ser confirmada por desempenho posterior;
+- sinalizar dificuldade excessiva e escolher receber pista, Learning Resource ou decomposição antes de trocar de desafio.
+
+### Entrega e validação
+
+A entrega técnica é validada prioritariamente por testes determinísticos. IA pode complementar com feedback contextualizado e perguntas sobre decisões, comportamento da solução, edge cases e trade-offs.
+
+Uma entrega pode estar tecnicamente concluída enquanto determinada competência permanece sem evidências suficientes de domínio.
 
 ### Evidências e adaptação
 
-O resultado da validação produz evidências relacionadas às competências exercitadas pelo desafio. Essas evidências alimentam a seleção do próximo ticket.
+A avaliação produz evidências associadas às competências exercitadas. O peso/confiança da evidência pode considerar o nível de assistência direcionada utilizado.
 
-Uma resposta correta isolada não deve ser tratada automaticamente como domínio. Sempre que viável, competências importantes devem ser demonstradas mais de uma vez e em contextos diferentes.
+Tempo gasto é telemetria, não evidência de proficiência no MVP.
 
-A adaptação do MVP deve ser simples e auditável, utilizando metadados dos tickets, diagnóstico inicial, pré-requisitos e evidências acumuladas. Inferência contínua por LLM, Skill Graph sofisticado e Progression Agent autônomo permanecem evoluções pós-MVP.
+Após evidências relevantes, o Learner Model é atualizado e alimenta a seleção do próximo desafio. A adaptação deve fortalecer lacunas prioritárias e também revisitar competências fortes para confirmar consistência e transferência.
 
-### Evolução
+O participante pode solicitar um PROBE curto de recalibração. O próprio Lab também pode iniciá-lo quando detectar má calibração persistente ou baixa confiança. A recalibração automática ocorre depois da conclusão do ticket corrente e antes do próximo.
 
-A jornada SQL inicial é composta por aproximadamente 10 desafios selecionados adaptativamente conforme a proficiência demonstrada. O número representa o tamanho esperado da experiência individual, não a quantidade total de tickets disponíveis no catálogo.
+### Continuidade
 
-Concluir a jornada não significa automaticamente dominar todas as competências avaliadas. O histórico de evidências deve permitir identificar competências demonstradas, parciais e lacunas.
+Learner Model, evidências e estado da jornada são persistentes. O participante pode interromper e continuar posteriormente de onde parou. No MVP, existe uma jornada ativa por vez.
 
-A evolução pós-MVP é tratada como hipótese no [ROADMAP](ROADMAP.md).
+### Evolução e conclusão
+
+A jornada SQL possui aproximadamente 10 desafios como referência de duração, não como quantidade fixa nem critério de conclusão.
+
+A evolução é medida tanto pela mudança nas competências demonstradas quanto pela capacidade de aplicá-las em problemas progressivamente mais exigentes e em contextos diferentes.
+
+A jornada é considerada concluída quando houver evidências suficientes de evolução nas competências-alvo e transferência. Lacunas remanescentes permanecem explícitas e podem originar uma extensão adaptativa opcional.
+
+Ao final, o participante recebe um perfil qualitativo por competência, mostrando evolução entre entrada e saída sem reduzir tudo a um único nível. Detalhes de competências e evidências podem ser consultados sob demanda.
+
+A próxima jornada é recomendada com base no perfil final, lacunas, pré-requisitos e objetivo profissional; a escolha final permanece com o participante.
 
 ## 8. Modelo Git
 
@@ -204,200 +205,110 @@ A evolução pós-MVP é tratada como hipótese no [ROADMAP](ROADMAP.md).
 
 ### Fork do participante
 
-Cada participante possui seu próprio fork. Dessa forma:
-
-- milhares de pessoas podem trabalhar no mesmo ticket;
-- o repositório principal não recebe PRs de participantes;
-- cada participante possui seu próprio histórico;
-- CI pode executar no fork;
-- o fluxo de Pull Request continua sendo praticado.
+Cada participante possui seu próprio fork, permitindo histórico e CI próprios sem receber PRs de participantes no repositório principal.
 
 ### Sincronização
 
-Novos tickets e evoluções são publicados no repositório principal.
-
-Participantes sincronizam seus forks com o `upstream` para receber novas versões.
-
-Alterações devem minimizar conflitos com áreas destinadas às soluções dos participantes.
+Novos tickets e evoluções são publicados no repositório principal. Participantes sincronizam seus forks com o `upstream`. Alterações devem minimizar conflitos com áreas destinadas às soluções.
 
 ## 9. Progressão
 
-A progressão deve considerar três dimensões complementares.
+A progressão considera três dimensões complementares.
 
 ### 9.1 Complexidade tecnológica
 
-Possível sequência:
-
-1. SQL e exploração de dados;
-2. SQL avançado e performance;
-3. modelagem de dados;
-4. Python para Engenharia de Dados;
-5. ETL/ELT;
-6. Airflow;
-7. qualidade e observabilidade;
-8. Data Lake/Lakehouse;
-9. cloud e infraestrutura;
-10. incidentes, otimização e arquitetura.
+Possível sequência: SQL e exploração; SQL avançado e performance; modelagem; Python; ETL/ELT; Airflow; qualidade/observabilidade; Data Lake/Lakehouse; cloud/infraestrutura; incidentes, otimização e arquitetura.
 
 ### 9.2 Natureza do trabalho
 
-O participante também deve evoluir no tipo de problema enfrentado, por exemplo:
-
-1. construir;
-2. modificar;
-3. corrigir;
-4. refatorar;
-5. otimizar;
-6. investigar;
-7. operar e realizar troubleshooting.
-
-Essas dimensões podem ser combinadas. Um ticket pode ser, por exemplo, `SQL + feature`, `SQL + legacy`, `Python + refactoring` ou `Airflow + incident`.
+O participante evolui também no tipo de problema: construir, modificar, corrigir, refatorar, otimizar, investigar e operar/troubleshooting.
 
 ### 9.3 Proficiência demonstrada
 
-A dificuldade adequada é relativa às competências que o participante já demonstrou, e não apenas à ordem de uma lista de tickets.
+A dificuldade adequada é relativa às competências demonstradas, não à ordem de uma lista.
 
-A progressão deve:
+A progressão deve evitar desafios claramente introdutórios para participantes experientes, evitar avanço por simples conclusão de conteúdo, considerar pré-requisitos/lacunas, acumular múltiplas evidências e verificar transferência em contextos diferentes.
 
-- evitar obrigar participantes experientes a percorrer desafios claramente introdutórios;
-- evitar avançar participantes apenas porque um conteúdo foi apresentado ou um único ticket foi concluído;
-- utilizar evidências produzidas pelas soluções e validações;
-- considerar pré-requisitos e lacunas identificadas;
-- revisitar competências quando as evidências forem insuficientes ou contraditórias;
-- quando viável, verificar retenção e transferência em problemas diferentes que dependam dos mesmos princípios.
-
-O MVP pode representar proficiência de forma simples, sem depender de senioridade profissional ou de um Skill Graph completo. Modelos mais ricos de mastery, confidence, histórico e diversidade de evidências são possibilidades pós-MVP registradas no [ROADMAP](ROADMAP.md).
+Competências técnicas e profissionais são dimensões distintas do Learner Model e podem participar da seleção do próximo ticket. Um participante pode dominar SQL técnico e ainda precisar desenvolver investigação, debugging, interpretação de requisitos ou raciocínio sobre trade-offs.
 
 ## 10. Validação automática
 
-A validação não deverá depender apenas da comparação textual com uma resposta oficial.
+A validação não deve depender apenas da comparação textual com uma resposta oficial. Sempre que possível, deve verificar comportamento e resultado.
 
-Sempre que possível, deve verificar comportamento e resultado.
+Para SQL, exemplos incluem execução sem erro, registros esperados/invalidos, colunas obrigatórias, regras de negócio, restrições explícitas e limites de performance quando aplicáveis.
 
-Exemplos para SQL:
-
-- consulta executa sem erro;
-- resultado contém registros esperados;
-- resultado não contém registros inválidos;
-- colunas obrigatórias existem;
-- regras de negócio foram respeitadas;
-- práticas explicitamente proibidas não foram utilizadas;
-- eventualmente, limites de performance.
-
-Isso permite múltiplas implementações corretas.
-
-A avaliação poderá evoluir para um modelo híbrido:
+A avaliação híbrida segue a prioridade:
 
 1. testes e verificações determinísticas produzem evidências objetivas;
-2. IA analisa essas evidências e, quando necessário, aspectos menos determinísticos;
-3. o participante recebe feedback técnico contextualizado;
-4. evidências relevantes são associadas às competências exercitadas e podem influenciar a seleção dos próximos desafios.
+2. IA analisa evidências e aspectos menos determinísticos quando necessário;
+3. perguntas pós-entrega podem verificar compreensão;
+4. evidências são associadas às competências e atualizam o Learner Model.
 
-O LLM não deve ser a única autoridade para critérios objetivos que possam ser verificados deterministicamente.
-
-O histórico de evidências de competência deve começar de forma simples no MVP, sem exigir um modelo sofisticado de Skill Graph.
+O LLM não deve ser autoridade única para critérios verificáveis deterministicamente.
 
 ## 11. Gamificação
 
-Gamificação é uma possibilidade, não requisito do MVP. Eventuais evoluções de gamificação estão registradas no [ROADMAP](ROADMAP.md) e não fazem parte do escopo atual.
+Gamificação é possibilidade, não requisito do MVP. Evoluções permanecem no [ROADMAP](ROADMAP.md).
 
 ## 12. Uso de IA e agentes
 
-IA poderá reduzir o custo de criação e manutenção do simulador e melhorar personalização e feedback.
+No MVP, IA pode apoiar geração controlada de candidatos, adaptação de pistas, seleção/construção de desafios dentro de restrições e feedback técnico.
 
-No MVP, o uso prioritário é:
-
-- gerar propostas estruturadas de tickets a partir de nível, domínio, competências ou conceitos-alvo;
-- apoiar a criação de critérios de aceite e entregáveis;
-- apoiar feedback técnico sobre entregas, preferencialmente baseado em evidências produzidas por validações determinísticas.
-
-A seleção adaptativa simples do MVP não precisa depender de IA. Quando regras, metadados e evidências determinísticas forem suficientes, devem ser preferidos por serem mais previsíveis e auditáveis.
-
-Possibilidades adicionais de IA, adaptação e automação são hipóteses pós-MVP mantidas no [ROADMAP](ROADMAP.md). Conteúdo gerado por IA deverá passar por validação antes de se tornar parte oficial do simulador.
+Regras e validações determinísticas devem ser preferidas quando suficientes por serem mais previsíveis e auditáveis. Skill Graph sofisticado, Progression Agent autônomo e arquitetura multiagente permanecem evoluções pós-MVP.
 
 ## 13. MVP
 
 ### Objetivo
 
-Validar se o formato "empresa fictícia + tickets + ambiente local + PR + CI" produz uma experiência útil de prática para participantes com níveis iniciais distintos, incluindo seleção simples de desafios baseada em evidências e geração assistida de tickets por IA sem comprometer a qualidade pedagógica.
+Validar se o formato de simulador profissional consegue desafiar participantes com níveis iniciais distintos por meio de um ciclo adaptativo baseado em evidências, sem exigir uma plataforma sofisticada.
 
 ### Escopo
 
-- uma empresa fictícia;
-- PostgreSQL;
-- Docker Compose;
-- base populada;
-- documentação mínima da empresa;
+- empresa fictícia e PostgreSQL local reproduzível;
 - ticket 000 de onboarding;
-- diagnóstico inicial simples e discriminativo;
-- catálogo de tickets SQL suficiente para compor jornadas distintas;
-- jornada individual de aproximadamente 10 desafios SQL selecionados adaptativamente conforme a proficiência demonstrada;
-- metadados mínimos de competências, dificuldade e pré-requisitos nos tickets;
-- estrutura para soluções;
-- Pull Request no fork;
-- GitHub Actions;
-- testes automáticos;
-- Learning Resources relacionados aos tickets, quando aplicável;
-- geração assistida de propostas de tickets por IA;
-- estrutura mínima para registrar evidências produzidas pela avaliação e relacioná-las às competências exercitadas;
-- seleção simples e auditável do próximo desafio a partir de diagnóstico, metadados e evidências;
-- avaliação híbrida entre verificações determinísticas e feedback por IA quando viável.
-
-A taxonomia de tickets e a possibilidade de cenários brownfield fazem parte do modelo do produto, mas não exigem que todos os tipos estejam representados no conjunto inicial do MVP.
+- objetivo profissional + PROBE SQL curto e adaptativo;
+- Learner Model mínimo, genérico e persistente;
+- competências técnicas e profissionais separadas;
+- catálogo SQL suficiente para jornadas distintas;
+- jornada de aproximadamente 10 desafios, com conclusão por evidências de evolução/transferência;
+- seleção híbrida e auditável do próximo desafio;
+- testes determinísticos e feedback assistido por IA;
+- perguntas pós-entrega quando necessárias para verificar compreensão;
+- assistência progressiva e registro de seu impacto na força das evidências;
+- persistência e retomada da jornada;
+- perfil final qualitativo e recomendação da próxima jornada;
+- geração de desafios candidatos e lifecycle controlado até publicação;
+- Learning Resources relacionados aos tickets quando aplicável;
+- teste com primeiros usuários.
 
 ### Fora do MVP
 
-- backend próprio;
-- autenticação própria;
-- portal web;
-- ranking global;
-- pagamento;
-- infraestrutura cloud obrigatória;
-- publicação totalmente autônoma de tickets por agentes;
+- backend/autenticação próprios;
+- pagamento, ranking global e infraestrutura cloud obrigatória;
+- múltiplas jornadas simultâneas;
 - Skill Graph sofisticado;
-- Learner Model avançado com inferência contínua de mastery/confidence;
-- inferência automática contínua de nível por LLM;
-- Progression Agent decidindo autonomamente a próxima competência;
-- geração dinâmica individualizada de todos os desafios;
+- Progression Agent autônomo;
+- inferência irrestrita por LLM;
+- arquitetura multiagente;
 - Airflow e demais trilhas.
 
 ## 14. Questões em aberto
 
-As seguintes decisões serão tratadas durante o detalhamento:
+Permanecem para detalhamento:
 
 - modelo exato de versionamento dos tickets;
-- formato dos arquivos de solução;
-- como impedir exposição trivial dos testes esperados;
-- estratégia para atualização do fork sem sobrescrever soluções;
-- formato e critérios do diagnóstico inicial;
-- modelo mínimo de proficiência utilizado no MVP;
-- algoritmo/regra de seleção do próximo desafio;
-- quantidade e cobertura necessárias do catálogo para suportar jornadas distintas de aproximadamente 10 desafios;
-- critérios para considerar evidências suficientes sobre uma competência;
-- estratégia de retenção e transferência aplicável ao MVP ou fases posteriores;
-- possibilidade de dependências entre tickets;
-- schema final para representar tipo de ticket, competências, dificuldade, pré-requisitos e demais metadados;
-- quais tipos de ticket estarão presentes no MVP SQL;
-- estrutura e localização dos Learning Resources no repositório;
-- política para uso de LLMs pelos participantes;
-- contrato/schema de entrada e saída do gerador de tickets;
-- processo de revisão e aprovação de tickets gerados por IA;
-- formato mínimo para armazenar evidências de competência;
-- critérios e limites do feedback produzido pelo AI Code Reviewer;
-- modelo futuro de pontuação;
+- formato dos arquivos de solução e proteção dos testes esperados;
+- estratégia de atualização do fork sem sobrescrever soluções;
+- taxonomia e lista inicial de competências técnicas/profissionais do MVP;
+- fórmula inicial de atualização de `mastery` e `confidence`;
+- thresholds de evidência para progressão e conclusão;
+- regras determinísticas do Challenge Engine;
+- quantidade/cobertura inicial do catálogo;
+- valor mínimo de execuções reais para `candidate -> published`;
+- critérios objetivos de risco que exigem revisão humana;
+- estrutura e localização dos Learning Resources;
+- se e como Learning Resources serão selecionados adaptativamente;
+- schema do gerador e do lifecycle de tickets;
+- critérios e limites do AI Code Reviewer;
 - identidade e domínio da empresa fictícia;
 - licença do projeto.
-
-## 15. Critério de pronto do Discovery v1
-
-O Discovery v1 é considerado suficiente para iniciar o projeto quando permite responder claramente:
-
-- qual problema estamos resolvendo;
-- para quem;
-- qual experiência queremos proporcionar;
-- qual é o diferencial;
-- como funciona o fluxo principal;
-- o que pertence ao MVP;
-- o que explicitamente não pertence ao MVP.
-
-Esses pontos estão definidos neste documento. Questões de implementação deverão ser resolvidas nas fases seguintes sem alterar a visão sem justificativa explícita.
