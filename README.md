@@ -10,6 +10,8 @@ A experiência pode ser entendida como um **estágio simulado de Engenharia de D
 
 O participante assume o papel de Engenheiro de Dados de uma empresa fictícia, recebe demandas em formato de tickets, investiga dados e documentação, implementa soluções e submete suas entregas a validações automatizadas.
 
+Embora o foco seja em Engenharia de Dados, a experiência também pode ser útil para outras áreas relacionadas à Tecnologia.
+
 ## Problema
 
 Quem está iniciando em Engenharia de Dados encontra cursos, vídeos e exercícios de sintaxe, mas normalmente não possui acesso a:
