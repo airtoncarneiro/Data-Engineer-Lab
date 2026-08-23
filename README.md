@@ -1,87 +1,79 @@
-# Data Engineering Work Simulator
+# Data Engineer Lab
 
-> Nome provisório do projeto.
+Laboratório educacional de Engenharia de Dados baseado em **learning by doing**, com cenários próximos aos encontrados em ambientes profissionais.
 
-## Visão geral
+O projeto simula uma empresa fictícia com dados, documentação, demandas contextualizadas e validação automatizada. O participante recebe desafios em formato de tickets e evolui de acordo com evidências de competência, não apenas pela conclusão de uma sequência fixa de exercícios.
 
-Este projeto propõe um **simulador de trabalho para Engenharia de Dados**. O objetivo não é ensinar tecnologias do zero, mas oferecer um ambiente no qual pessoas que já estudaram conceitos e ferramentas possam **aplicar o conhecimento em situações próximas do mundo real**.
+## Estado atual
 
-A experiência pode ser entendida como um **estágio simulado de Engenharia de Dados**: o participante entra em uma empresa fictícia, conhece seus sistemas e dados, recebe demandas e evolui conforme entrega soluções cada vez mais complexas.
+O projeto está na fase de definição e implementação do MVP SQL.
 
-O participante assume o papel de Engenheiro de Dados de uma empresa fictícia, recebe demandas em formato de tickets, investiga dados e documentação, implementa soluções e submete suas entregas a validações automatizadas.
+A arquitetura aprovada para o MVP é local:
 
-Embora o foco seja em Engenharia de Dados, a experiência também pode ser útil para outras áreas relacionadas à Tecnologia.
+```text
+Browser
+   │
+   ▼
+Local Web UI
+   │
+   ▼
+Lab Engine (Python)
+   │
+   ├── PostgreSQL via Docker
+   └── persistência local da jornada
+```
 
-## Problema
+O GitHub é utilizado para desenvolvimento, versionamento e distribuição do produto. Fork, Pull Request e GitHub Actions não fazem parte do fluxo operacional obrigatório do participante no MVP.
 
-Quem está iniciando em Engenharia de Dados encontra cursos, vídeos e exercícios de sintaxe, mas normalmente não possui acesso a:
+## Experiência principal do MVP
 
-- ambiente corporativo realista;
-- demandas de negócio contextualizadas;
-- bases de dados relacionadas entre si;
-- código legado e documentação incompleta;
-- pipelines e dependências;
-- fluxo Git/PR/CI;
-- feedback sobre uma solução entregue.
+O primeiro vertical slice deve provar o ciclo adaptativo ponta a ponta:
 
-O projeto busca preencher essa lacuna entre **conhecer uma tecnologia** e **saber utilizá-la para resolver problemas de Engenharia de Dados**.
+```text
+iniciar Lab
+   ↓
+informar objetivo profissional
+   ↓
+PROBE SQL
+   ↓
+Learner Model
+   ↓
+seleção de desafio
+   ↓
+solução do participante
+   ↓
+validação determinística
+   ↓
+registro de evidências
+   ↓
+atualização do Learner Model
+   ↓
+seleção do próximo desafio
+```
 
-## Experiência proposta
+A jornada SQL deverá usar aproximadamente 10 desafios como referência de duração, com adaptação baseada nas competências demonstradas.
 
-O participante deverá:
+## Princípios
 
-1. fazer fork do repositório principal;
-2. preparar o ambiente local;
-3. executar o onboarding da empresa fictícia;
-4. receber e selecionar tickets disponíveis;
-5. investigar contexto, dados e regras de negócio;
-6. implementar a solução;
-7. abrir uma Pull Request no próprio fork;
-8. receber validação automática pelo CI;
-9. corrigir eventuais problemas;
-10. concluir o ticket e avançar na jornada.
-
-## MVP
-
-A primeira versão deverá validar a experiência principal com o menor escopo possível:
-
-- PostgreSQL em container;
-- base de dados previamente populada;
-- onboarding;
-- aproximadamente 10 tickets SQL progressivos;
-- respostas implementadas pelo participante;
-- Pull Requests no fork do participante;
-- GitHub Actions para validação automática;
-- sem backend próprio;
-- sem ranking global obrigatório.
-
-## Evolução prevista
-
-Após validar o MVP, o simulador poderá incorporar:
-
-- Python;
-- modelagem de dados;
-- ETL/ELT;
-- Apache Airflow;
-- qualidade de dados;
-- observabilidade;
-- Data Lake/Lakehouse;
-- cloud;
-- incidentes e troubleshooting;
-- performance e otimização;
-- CI/CD e IaC;
-- agentes de IA para geração, revisão e manutenção de desafios.
+- problemas profissionais antes de exercícios artificiais;
+- validação determinística sempre que possível;
+- IA como complemento, não como autoridade única para critérios objetivos;
+- progressão baseada em evidências;
+- autonomia do participante;
+- ambiente reproduzível;
+- simplicidade antes de complexidade;
+- evolução incremental para uma possível plataforma somente após validação do produto local.
 
 ## Documentação
 
 - [Discovery](docs/DISCOVERY.md)
-- [Princípios do projeto](docs/PRINCIPLES.md)
-- [Arquitetura inicial](docs/ARCHITECTURE.md)
+- [Princípios](docs/PRINCIPLES.md)
+- [Arquitetura](docs/ARCHITECTURE.md)
 - [Roadmap](docs/ROADMAP.md)
-- [Backlog inicial](docs/BACKLOG.md)
+- [Backlog](docs/BACKLOG.md)
 
-## Status
+## Escopo inicial
 
-**Discovery / definição do MVP.**
+O MVP começa com SQL e PostgreSQL. Evoluções possíveis incluem modelagem, Python, ETL/ELT, Airflow, plataforma de dados, cloud, operação e cenários de incidentes.
 
-As decisões registradas nesta documentação funcionam como fonte inicial da verdade e deverão orientar as próximas etapas do projeto.
+Autenticação, backend centralizado, multiusuário, mensalidade, execução remota e portal hospedado pertencem a uma eventual evolução para plataforma e não são requisitos do MVP local.
